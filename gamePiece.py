@@ -22,12 +22,6 @@ class gamePiece(pygame.sprite.Sprite):
     def getMoves(self):
         raise NotImplementedError("Implement getMoves!")
 
-    def getPosition(self):
-        return self.position
-
-    def getColor(self):
-        return self.color
-
     def setPosition(self):
         raise NotImplementedError("Implement setPosition")
 

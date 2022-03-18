@@ -20,7 +20,7 @@ selectedPieces = []
 def drawPieces(src, pieces):
     for piece in pieces:
         # print(piece.getPosition())
-        piece.draw(src, piece.getPosition())
+        piece.draw(src, piece.position)
 
 
 def drawBoard(src):
@@ -54,35 +54,35 @@ class Sprite(pygame.sprite.Sprite):
 
 
 def mouseDown(mouseLoc):
-    selectedPiece = None
+    selected_piece = None
     friends = []
     enemies = []
 
     white_locations = [[], []]
     for piece in white_pieces:
-        white_locations[0].append(piece.getPosition())
+        white_locations[0].append(piece.position)
         white_locations[1].append(piece)
 
     black_locations = [[], []]
     for piece in black_pieces:
-        black_locations[0].append(piece.getPosition())
+        black_locations[0].append(piece.position)
         black_locations[1].append(piece)
     # print('white: ', white_locations, 'black: ', black_locations)
 
     for i in range(len(white_locations[0])):
         if mouseLoc == white_locations[0][i]:
-            selectedPiece = white_locations[1][i]
+            selected_piece = white_locations[1][i]
             enemies = black_pieces
             friends = white_pieces
     for i in range(len(black_locations[0])):
         if mouseLoc == black_locations[0][i]:
-            selectedPiece = black_locations[1][i]
+            selected_piece = black_locations[1][i]
             enemies = white_pieces
             friends = black_pieces
 
-    if selectedPiece is not None:
-        moves = selectedPiece.getMoves(friends, enemies)
-        return moves, selectedPiece
+    if selected_piece is not None:
+        moves = selected_piece.getMoves(friends, enemies)
+        return moves, selected_piece
     else:
         return None, None
 
@@ -113,7 +113,7 @@ def redraw(src, moves):
 
 
 def loop(src):
-    global selectedPieces
+    global selectedPieces, selectedPiece
     done = False
     moves = None
     while not done:
@@ -132,26 +132,24 @@ def loop(src):
                 elif (mouseLoc in moves[0]) or (mouseLoc in moves[1]):
                     # print('mouseLoc is in moves')
                     selectedPiece.setPosition(mouseLoc)
-                    selectedPiece.draw(src, selectedPiece.getPosition())
+                    selectedPiece.draw(src, selectedPiece.position)
                     moves = None
                 elif (moves is not None) and (mouseLoc not in moves):
                     # print('moves not none mouse location not in moves')
                     moves, selectedPiece = mouseDown(mouseLoc)
 
                 if selectedPiece is not None:
-                    if selectedPiece.getColor == 'black':
+                    if selectedPiece.color == 'black':
                         for piece in white_pieces:
-                            if selectedPiece.getPosition() == piece.getPosition():
+                            if selectedPiece.position == piece.position:
                                 piece.setVisable(False)
                     else:
                         for piece in black_pieces:
-                            if selectedPiece.getPosition() == piece.getPosition():
+                            if selectedPiece.position == piece.position:
                                 piece.setVisable(False)
 
                 # print(moves)
                 redraw(src, moves)
-                moves = None
-                selectedPiece = None
 
         pygame.display.flip()
 
@@ -165,6 +163,7 @@ def main():
     drawBoard(src)
     drawPieces(src, white_pieces)
     drawPieces(src, black_pieces)
+
     loop(src)
     pygame.quit()
 

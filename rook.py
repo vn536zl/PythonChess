@@ -10,51 +10,32 @@ class rook(gamePiece.gamePiece):
         self.imageFile = image
         super().__init__(color, position, self.imageFile, width, height, visible)
 
-    def getMoves(self, friend, enemy):
+    def getPosableMoves(self, friend, enemy):
         cordList = [[], []]
 
         # logic for getting all the moves in piece row
-        limiter = False
-        for rows in range(8):
-            if limiter:
-                break
-            row = rows
-            if row >= self.position[0]:
-                row = -rows
-            add_row = self.position[0] + row
-            if add_row < 0:
-                add_row = -(self.position[0] + row)
-            elif add_row > 7:
-                add_row = self.position[0] - row
-            cordList[0].append([add_row, self.position[1]])
+        x = self.position[0]
+        y = self. position[1]
 
-        # logic for getting all the moves in piece column
-        limiter = False
-        for column in range(8):
-            if limiter:
-                break
-            col = column
-            if col >= self.position[1]:
-                col = -col
-            add_col = self.position[1] + col
-            if add_col < 0:
-                add_col = -(self.position[1] + col)
-            elif add_col > 7:
-                add_col = self.position[1] - col
-            cordList[1].append([self.position[0], add_col])
+        a = x
+        b = y - 1
+        while (7 > a >= 0) and (7 > b >= 0):
+            cordList[0].append([a, b])
+            try
 
         # Return the list of cords
 
         for i in range(len(friend)):
 
-            #remove position of friends
+            # remove position of friends/self
             if friend[i].position in cordList[0]:
                 cordList[0].remove(friend[i].position)
             if friend[i].position in cordList[1]:
                 cordList[1].remove(friend[i].position)
 
-            if friend[i].position is not self.position:
-                if friend[i].position[0] != 0 and friend[i].position[0] != 1:
+            # Remove possible moves if friend is in the way
+            if friend[i].position != self.position:
+                if (friend[i].position[0] != 0) and (friend[i].position[0] != 1):
 
                     for x in range(8):
                         if x < friend[i].position[0]:
@@ -62,7 +43,7 @@ class rook(gamePiece.gamePiece):
                         else:
                             if [x, friend[i].position[1]] in cordList[0]:
                                 cordList[0].remove([x, friend[i].position[1]])
-                elif friend[i].position[1] != 0 and friend[i].position[1] != 1:
+                elif (friend[i].position[1] != 0) and (friend[i].position[1] != 1):
 
                     for x in range(8):
                         if x < friend[i].position[1]:
