@@ -145,11 +145,11 @@ def loop(src):
                     if selectedPiece.color == 'black':
                         for piece in white_pieces:
                             if selectedPiece.position == piece.position:
-                                piece.setVisable(False)
+                                piece.setVisible(False)
                     else:
                         for piece in black_pieces:
                             if selectedPiece.position == piece.position:
-                                piece.setVisable(False)
+                                piece.setVisible(False)
 
                 # print(moves)
                 redraw(src, moves)
@@ -180,8 +180,8 @@ def main():
     # print('white middle rook moves: ', white_pieces[1].getMoves(white_pieces, black_pieces))
     # print('black corner rook moves: ', black_pieces[0].getMoves(black_pieces, white_pieces))
     # print('black middle rook moves: ', black_pieces[1].getMoves(black_pieces, white_pieces))
-    print('white bishop moves: ', white_pieces[3].getMoves(white_pieces, black_pieces))
-    print('white bishop moves: ', black_pieces[3].getMoves(black_pieces, white_pieces))
+    # print('white bishop moves: ', white_pieces[3].getMoves(white_pieces, black_pieces))
+    # print('white bishop moves: ', black_pieces[3].getMoves(black_pieces, white_pieces))
     loop(src)
     pygame.quit()
 
