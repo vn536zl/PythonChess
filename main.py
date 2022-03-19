@@ -1,5 +1,6 @@
 import pygame
 from rook import rook
+from bishop import bishop
 
 # var's
 black = (0, 0, 0)
@@ -12,8 +13,8 @@ height = window_size[1] / 8
 margin = 5
 # ['brook.png', 'bknight.png', 'bbishop.png', 'bqueen.png', 'bking.png']
 # ['wrook.png', 'wknight.png', 'wbishop.png', 'wqueen.png', 'wking.png']
-white_pieces = [rook('white', [0, 0], width, height, True), rook('white', [4, 0], width, height, True)]
-black_pieces = [rook('black', [7, 7], width, height, True), rook('black', [4, 7], width, height, True)]
+white_pieces = [rook('white', [0, 0], width, height, True), rook('white', [7, 0], width, height, True), bishop('white', [1, 0], width, height, True), bishop('white', [6, 0], width, height, True)]
+black_pieces = [rook('black', [0, 7], width, height, True), rook('black', [7, 7], width, height, True), bishop('black', [1, 7], width, height, True), bishop('black', [6, 7], width, height, True)]
 selectedPieces = []
 
 
@@ -80,7 +81,7 @@ def mouseDown(mouseLoc):
             enemies = white_pieces
             friends = black_pieces
 
-    if selected_piece is not None:
+    if (selected_piece is not None) and (selected_piece.visible):
         moves = selected_piece.getMoves(friends, enemies)
         return moves, selected_piece
     else:
@@ -113,7 +114,6 @@ def redraw(src, moves):
 
 
 def loop(src):
-    global selectedPieces, selectedPiece
     done = False
     moves = None
     while not done:
@@ -136,7 +136,10 @@ def loop(src):
                     moves = None
                 elif (moves is not None) and (mouseLoc not in moves):
                     # print('moves not none mouse location not in moves')
-                    moves, selectedPiece = mouseDown(mouseLoc)
+                    if (selectedPiece is not None) and (mouseLoc == selectedPiece.position):
+                        moves, selectedPiece = None, None
+                    else:
+                        moves, selectedPiece = mouseDown(mouseLoc)
 
                 if selectedPiece is not None:
                     if selectedPiece.color == 'black':
@@ -154,6 +157,16 @@ def loop(src):
         pygame.display.flip()
 
 
+def testLoop(src):
+    done = False
+    while not done:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                done = True
+
+        pygame.display.flip()
+
+
 def main():
     pygame.init()
     src = pygame.display.set_mode(window_size)
@@ -163,7 +176,12 @@ def main():
     drawBoard(src)
     drawPieces(src, white_pieces)
     drawPieces(src, black_pieces)
-
+    # print('white corner rook moves: ', white_pieces[0].getMoves(white_pieces, black_pieces))
+    # print('white middle rook moves: ', white_pieces[1].getMoves(white_pieces, black_pieces))
+    # print('black corner rook moves: ', black_pieces[0].getMoves(black_pieces, white_pieces))
+    # print('black middle rook moves: ', black_pieces[1].getMoves(black_pieces, white_pieces))
+    print('white bishop moves: ', white_pieces[3].getMoves(white_pieces, black_pieces))
+    print('white bishop moves: ', black_pieces[3].getMoves(black_pieces, white_pieces))
     loop(src)
     pygame.quit()
 

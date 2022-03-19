@@ -1,12 +1,12 @@
 import gamePiece
 
 
-class rook(gamePiece.gamePiece):
+class bishop(gamePiece.gamePiece):
     def __init__(self, color, position, width, height, visible):
         if color == 'white':
-            image = "1x/wrook.png"
+            image = "1x/wbishop.png"
         else:
-            image = "1x/brook.png"
+            image = "1x/bbishop.png"
         self.imageFile = image
         super().__init__(color, position, self.imageFile, width, height, visible)
 
@@ -19,49 +19,53 @@ class rook(gamePiece.gamePiece):
         x = self.position[0]
         y = self.position[1]
 
-        # Up
-        a = x
+        # Up Right
+        a = x + 1
         b = y - 1
         while (7 >= a >= 0) and (7 >= b >= 0):
             cols.append([a, b])
             try:
-                cols.append([a, b - 1])
+                cols.append([a + 1, b - 1])
             except IndexError:
                 pass
             b -= 1
+            a += 1
 
-        # Down
-        a = x
+        # Down Right
+        a = x + 1
         b = y + 1
         while (7 >= a >= 0) and (7 >= b >= 0):
             cols.append([a, b])
             try:
-                cols.append([a, b + 1])
+                cols.append([a + 1, b + 1])
             except IndexError:
                 pass
             b += 1
+            a += 1
 
-        # left
+        # Down Left
         a = x - 1
-        b = y
+        b = y + 1
         while (7 >= a >= 0) and (7 >= b >= 0):
             rows.append([a, b])
             try:
-                rows.append([a - 1, b])
+                rows.append([a - 1, b + 1])
             except IndexError:
                 pass
             a -= 1
+            b += 1
 
-        # right
-        a = x + 1
-        b = y
+        #  Up Left
+        a = x - 1
+        b = y - 1
         while (7 >= a >= 0) and (7 >= b >= 0):
             rows.append([a, b])
             try:
-                rows.append([a + 1, b])
+                rows.append([a - 1, b - 1])
             except IndexError:
                 pass
-            a += 1
+            a -= 1
+            b -= 1
 
         # Remove duplicates
         for i in rows:
@@ -164,7 +168,6 @@ class rook(gamePiece.gamePiece):
                             elif [x, k] in cordList[1]:
                                 cordList[1].remove([x, k])
 
-        # Return the cord List
         return cordList
 
     def setPosition(self, position):
