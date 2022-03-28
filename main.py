@@ -151,7 +151,7 @@ def loop(src):
                             if selectedPiece.position == piece.position:
                                 piece.setVisible(False)
 
-                # print(moves)
+                print(moves)
                 redraw(src, moves)
 
         pygame.display.flip()
