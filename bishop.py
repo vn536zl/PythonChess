@@ -21,48 +21,96 @@ class bishop(gamePiece.gamePiece):
             y = self.position[1]
 
             # Up Right
+            run = True
             a = x + 1
             b = y - 1
-            while (7 >= a >= 0) and (7 >= b >= 0):
+            while ((7 >= a >= 0) and (7 >= b >= 0)) and run:
                 cols.append([a, b])
                 try:
-                    cols.append([a + 1, b - 1])
+                    for piece in friend:
+                        if (piece.position[0] >= (a + 1) and piece.position[1] >= (b - 1)) and piece.position != self.position:
+                            run = False
+                            break
+                        else:
+                            cols.append([a, b])
+                    for piece in enemy:
+                        if piece.position[0] <= (a + 1) and piece.position[1] <= (b - 1):
+                            run = False
+                            break
+                        else:
+                            cols.append([a, b])
                 except IndexError:
                     pass
                 b -= 1
                 a += 1
 
             # Down Right
+            run = True
             a = x + 1
             b = y + 1
-            while (7 >= a >= 0) and (7 >= b >= 0):
+            while ((7 >= a >= 0) and (7 >= b >= 0)) and run:
                 cols.append([a, b])
                 try:
-                    cols.append([a + 1, b + 1])
+                    for piece in friend:
+                        if (piece.position[0] >= (a + 1) and piece.position[1] >= (b + 1)) and piece.position != self.position:
+                            run = False
+                            break
+                        else:
+                            cols.append([a, b])
+                    for piece in enemy:
+                        if piece.position[0] <= (a + 1) and piece.position[1] <= (b + 1):
+                            run = False
+                            break
+                        else:
+                            cols.append([a, b])
                 except IndexError:
                     pass
                 b += 1
                 a += 1
 
             # Down Left
+            run = True
             a = x - 1
             b = y + 1
-            while (7 >= a >= 0) and (7 >= b >= 0):
+            while ((7 >= a >= 0) and (7 >= b >= 0)) and run:
                 rows.append([a, b])
                 try:
-                    rows.append([a - 1, b + 1])
+                    for piece in friend:
+                        if (piece.position[0] <= (a - 1) and piece.position[1] >= (b + 1)) and piece.position != self.position:
+                            run = False
+                            break
+                        else:
+                            rows.append([a, b])
+                    for piece in enemy:
+                        if piece.position[0] >= (a - 1) and piece.position[1] <= (b + 1):
+                            run = False
+                            break
+                        else:
+                            rows.append([a, b])
                 except IndexError:
                     pass
                 a -= 1
                 b += 1
 
             #  Up Left
+            run = True
             a = x - 1
             b = y - 1
-            while (7 >= a >= 0) and (7 >= b >= 0):
+            while ((7 >= a >= 0) and (7 >= b >= 0)) and run:
                 rows.append([a, b])
                 try:
-                    rows.append([a - 1, b - 1])
+                    for piece in friend:
+                        if (piece.position[0] <= (a - 1) and piece.position[1] <= (b - 1)) and piece.position != self.position:
+                            run = False
+                            break
+                        else:
+                            rows.append([a, b])
+                    for piece in enemy:
+                        if piece.position[0] >= (a - 1) and piece.position[1] >= (b - 1):
+                            run = False
+                            break
+                        else:
+                            rows.append([a, b])
                 except IndexError:
                     pass
                 a -= 1
@@ -87,6 +135,8 @@ class bishop(gamePiece.gamePiece):
                 if (i[0] >= 8) or (i[1] >= 8):
                     cordList[1].remove(i)
 
+############# Friend list Beginning #########################
+
             for i in range(len(friend)):
 
                 # remove position of friends/self
@@ -95,79 +145,7 @@ class bishop(gamePiece.gamePiece):
                 if friend[i].position in cordList[1]:
                     cordList[1].remove(friend[i].position)
 
-                # Remove possible moves if friend is in the way
-                if friend[i].position != self.position:
-                    x = friend[i].position[0]
-                    y = friend[i].position[1]
-
-                    if (x != 0) and (x != 1):
-
-                        if self.position[0] < x:
-                            for k in range(8):
-                                if k < x:
-                                    continue
-                                elif [k, y] in cordList[0]:
-                                    cordList[0].remove([k, y])
-                        elif self.position[0] > x:
-                            for k in range(8):
-                                if k > x:
-                                    continue
-                                elif [k, y] in cordList[0]:
-                                    cordList[0].remove([k, y])
-
-                    if (y != 0) and (y != 1):
-
-                        if self.position[1] < y:
-                            for k in range(8):
-                                if k < y:
-                                    continue
-                                elif [x, k] in cordList[1]:
-                                    cordList[1].remove([x, k])
-                        if self.position[1] > y:
-                            for k in range(8):
-                                if k > y:
-                                    continue
-                                elif [x, k] in cordList[1]:
-                                    cordList[1].remove([x, k])
-
-            for i in range(len(enemy)):
-
-                x = enemy[i].position[0]
-                y = enemy[i].position[1]
-
-                if (x != 0) and (x != 1):
-
-                    if self.position[0] < x:
-                        for k in range(8):
-                            if [k, y] != [x, y]:
-                                if k < x:
-                                    continue
-                                elif [k, y] in cordList[0]:
-                                    cordList[0].remove([k, y])
-                    elif self.position[0] > x:
-                        for k in range(8):
-                            if [k, y] != [x, y]:
-                                if k < x:
-                                    continue
-                                elif [k, y] in cordList[0]:
-                                    cordList[0].remove([k, y])
-
-                if (y != 0) and (y != 1):
-
-                    if self.position[1] < y:
-                        for k in range(8):
-                            if [x, k] != [x, y]:
-                                if k < y:
-                                    continue
-                                elif [x, k] in cordList[1]:
-                                    cordList[1].remove([x, k])
-                    if self.position[1] > y:
-                        for k in range(8):
-                            if [x, k] != [x, y]:
-                                if k < y:
-                                    continue
-                                elif [x, k] in cordList[1]:
-                                    cordList[1].remove([x, k])
+############## Friend list ending ###########################
 
             return cordList
         else:

@@ -13,7 +13,7 @@ height = window_size[1] / 8
 margin = 5
 # ['brook.png', 'bknight.png', 'bbishop.png', 'bqueen.png', 'bking.png']
 # ['wrook.png', 'wknight.png', 'wbishop.png', 'wqueen.png', 'wking.png']
-white_pieces = [rook('white', [0, 0], width, height, True), rook('white', [7, 0], width, height, True), bishop('white', [1, 0], width, height, True), bishop('white', [6, 0], width, height, True)]
+white_pieces = [rook('white', [4, 3], width, height, True), rook('white', [7, 0], width, height, True), bishop('white', [1, 0], width, height, True), bishop('white', [6, 0], width, height, True), bishop('white', [3, 3], width, height, True)]
 black_pieces = [rook('black', [0, 7], width, height, True), rook('black', [7, 7], width, height, True), bishop('black', [1, 7], width, height, True), bishop('black', [6, 7], width, height, True)]
 selectedPieces = []
 
