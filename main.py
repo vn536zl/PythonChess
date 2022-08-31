@@ -74,6 +74,7 @@ def movePiece(src, piece):
     mouse_pos = pygame.mouse.get_pos()
     mouse_pos = (floor(mouse_pos[0] / width), floor(mouse_pos[1] / height))
     if (mouse_pos in piece.getMoves()):
+        print(mouse_pos)
         pos = piece.setPosition(mouse_pos)
         print(pos)
 
