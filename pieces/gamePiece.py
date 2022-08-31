@@ -13,10 +13,10 @@ class gamePiece(pygame.sprite.Sprite):
         self.height = screenSize[1] / 8
         self.visible = visible
         
-    def drawPiece(self, src):
+    def drawPiece(self, src, position):
         
         if self.visible:
-            self.rect = pygame.Rect((self.position[0] * self.width), (self.position[1] * self.height), self.width, self.height)
+            self.rect = pygame.Rect((position[0] * self.width), (position[1] * self.height), self.width, self.height)
             self.image = pygame.transform.scale(self.image, (self.width, self.height))
             src.blit(self.image, self.rect)
             
