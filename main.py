@@ -5,13 +5,16 @@ from pieces.bishop import bishop
 from pieces.queen import queen
 from pieces.knight import knight
 from pieces.king import king
+from pieces.pawn import pawn
 
 black, white, green, red = (0, 0, 0), (255, 255, 255), (0, 255, 0), (255, 0, 0)
 screen_size = [450, 450]
 width = screen_size[0] / 8
 height = screen_size[1] / 8
-white_pieces = [rook('white', (0, 7), screen_size, True), knight('white', (1, 7), screen_size, True), bishop('white', (2, 7), screen_size, True), queen('white', (3, 7), screen_size, True), king('white', (4, 7), screen_size, True), bishop('white', (5, 7), screen_size, True), knight('white', (6, 7), screen_size, True), rook('white', (7, 7), screen_size, True)]
-black_pieces = [rook('black', (0, 0), screen_size, True), knight('black', (1, 0), screen_size, True), bishop('black', (2, 0), screen_size, True), queen('black', (3, 0), screen_size, True), king('black', (4, 0), screen_size, True), bishop('black', (5, 0), screen_size, True), knight('black', (6, 0), screen_size, True), rook('black', (7, 0), screen_size, True)]
+white_pieces = [rook('white', (0, 7), screen_size, True), knight('white', (1, 7), screen_size, True), bishop('white', (2, 7), screen_size, True), queen('white', (3, 7), screen_size, True), king('white', (4, 7), screen_size, True), bishop('white', (5, 7), screen_size, True), knight('white', (6, 7), screen_size, True), rook('white', (7, 7), screen_size, True),
+                pawn('white', (4, 6), screen_size, True), ]
+black_pieces = [rook('black', (0, 0), screen_size, True), knight('black', (1, 0), screen_size, True), bishop('black', (2, 0), screen_size, True), queen('black', (3, 0), screen_size, True), king('black', (4, 0), screen_size, True), bishop('black', (5, 0), screen_size, True), knight('black', (6, 0), screen_size, True), rook('black', (7, 0), screen_size, True),
+                pawn('black', (4, 1), screen_size, True), ]
 all_pieces = []
 for piece in white_pieces:
     all_pieces.append(piece)
