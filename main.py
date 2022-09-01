@@ -1,13 +1,14 @@
 from math import *
 import pygame
 from pieces.rook import rook
+from pieces.bishop import bishop
 
 black, white, green, red = (0, 0, 0), (255, 255, 255), (0, 255, 0), (255, 0, 0)
 screen_size = [350, 350]
 width = screen_size[0] / 8
 height = screen_size[1] / 8
-white_pieces = [rook('white', (1, 1), screen_size, True), rook('white', (7, 1), screen_size, True)]
-black_pieces = [rook('black', (7, 4), screen_size, True), rook('black', (1, 4), screen_size, True)]
+white_pieces = [rook('white', (1, 1), screen_size, True), bishop('white', (3, 3), screen_size, True)]
+black_pieces = [rook('black', (1, 5), screen_size, True), bishop('black', (7, 4), screen_size, True)]
 all_pieces = []
 for piece in white_pieces:
     all_pieces.append(piece)
