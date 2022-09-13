@@ -1,4 +1,6 @@
+from math import pi
 import pieces.gamePiece
+import sys
 
 
 class king(pieces.gamePiece.gamePiece):
@@ -7,7 +9,8 @@ class king(pieces.gamePiece.gamePiece):
             self.image = "pieces/images/wking.png"
         elif (color == 'black'):
             self.image = "pieces/images/bking.png"
-        super().__init__(self.image, color, position, screenSize, visible)
+        self.moves = 0
+        super().__init__(self.image, color, position, screenSize, visible, self.moves)
         
     def getMoves(self, all_pieces):
         # Get all possiable moves for piece
@@ -104,11 +107,20 @@ class king(pieces.gamePiece.gamePiece):
                     pieceY -= 1
                     if ((self.position[0], pieceY) in moveList):
                         moveList.remove((self.position[0], pieceY))
+                        
+            # Remove self-checking moves
+            if ((piece.color != self.color) and (sys._getframe(1).f_code.co_name != "getMoves")):
+                pieceMoves = piece.getMoves(all_pieces)
+                for move in pieceMoves:
+                    if move in moveList:
+                        moveList.remove(move)
+            
 
         return moveList
     
     def setPosition(self, selectedPos):
         self.position = selectedPos
+        self.moves += 1
         return(self.position)
     
     def setVisible(self, visible):

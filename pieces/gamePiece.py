@@ -2,7 +2,7 @@ import pygame
 
 class gamePiece(pygame.sprite.Sprite):
 
-    def __init__(self, image, color, position, screenSize, visible):
+    def __init__(self, image, color, position, screenSize, visible, moves):
         super().__init__()
         
         self.image = pygame.image.load(image)
@@ -12,6 +12,7 @@ class gamePiece(pygame.sprite.Sprite):
         self.width = screenSize[0] / 8
         self.height = screenSize[1] / 8
         self.visible = visible
+        self.moves = moves
         
     def drawPiece(self, src, position):
         if self.visible:

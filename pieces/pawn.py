@@ -6,8 +6,9 @@ class pawn(pieces.gamePiece.gamePiece):
             self.image = "pieces/images/wpawn.png"
         elif (color == 'black'):
             self.image = "pieces/images/bpawn.png"
-        super().__init__(self.image, color, position, screenSize, visible)
-        self.moved = False
+        self.moves = 0
+        super().__init__(self.image, color, position, screenSize, visible, self.moves)
+        
         
     def getMoves(self, all_pieces):
         # Get all possiable moves for piece
@@ -15,14 +16,14 @@ class pawn(pieces.gamePiece.gamePiece):
         for y in range(8):
                 for x in range(8):
                     if(self.color == 'black'):
-                        if(self.moved):
+                        if(self.moves > 0):
                             if ((x == self.position[0]) and (y == self.position[1] + 1)):
                                 moveList.append((x,y))
                         else:
                             if ((x == self.position[0]) and ((y == self.position[1] + 1) or (y == self.position[1] + 2))):
                                 moveList.append((x,y))
                     else:
-                        if(self.moved):
+                        if(self.moves > 0):
                             if ((x == self.position[0]) and (y == self.position[1] - 1)):
                                 moveList.append((x,y))
                         else:
@@ -58,17 +59,17 @@ class pawn(pieces.gamePiece.gamePiece):
              
             # Add capturing
             if((self.color == 'black') and (self.color != piece.color)):           
-                if((piece.position[1] == self.position[1] + 1) and (piece.position[0] == self.position[0] + 1)):
+                if((piece.position[1] == self.position[1] + 1) and (piece.position[0] == self.position[0] + 1 or piece.position[0] == self.position[0] - 1)):
                     moveList.append((pieceX, pieceY))
             elif(self.color == 'white') and (self.color != piece.color):
-                if((piece.position[1] == self.position[1] - 1) and (piece.position[0] == self.position[0] - 1)):
+                if((piece.position[1] == self.position[1] - 1) and (piece.position[0] == self.position[0] - 1 or piece.position[0] == self.position[0] + 1)):
                     moveList.append((pieceX, pieceY))
 
         return moveList
     
     def setPosition(self, selectedPos):
         self.position = selectedPos
-        self.moved = True
+        self.moves += 1
         return(self.position)
     
     def setVisible(self, visible):

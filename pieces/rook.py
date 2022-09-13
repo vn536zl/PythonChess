@@ -6,7 +6,8 @@ class rook(pieces.gamePiece.gamePiece):
             self.image = "pieces/images/wrook.png"
         elif (color == 'black'):
             self.image = "pieces/images/brook.png"
-        super().__init__(self.image, color, position, screenSize, visible)
+        self.moves = 0
+        super().__init__(self.image, color, position, screenSize, visible, self.moves)
         
     def getMoves(self, all_pieces):
         # Get all possiable moves for piece
@@ -62,6 +63,7 @@ class rook(pieces.gamePiece.gamePiece):
     
     def setPosition(self, selectedPos):
         self.position = selectedPos
+        self.moves += 1
         return(self.position)
     
     def setVisible(self, visible):
