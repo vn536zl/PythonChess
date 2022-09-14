@@ -25,6 +25,7 @@ def loop(src):
     done = False
     piece = None
     moves = None
+    checkedKing = None
     while not done:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -39,17 +40,22 @@ def loop(src):
                     piece = None
                     redraw(src, all_pieces, moves)
                 else:
-                    if (piece == None):
-                        piece, moves = getPieceMoves()
+                    if ((piece == None)):
+                        piece, moves = getPieceMoves(checkedKing)
                     if (piece != None):
                         moved = movePiece(piece, moves)
                     if (moved):
+                        checkedKing, mated = check(piece)
+                        if(mated):
+                            done = True
+                            break
                         checkCapture(piece)
                         moves = None
                         piece = None
                     redraw(src, all_pieces, moves)
                 
         pygame.display.flip()
+    
 
 def drawPieces(src, pieceList):
     for piece in pieceList:
@@ -74,15 +80,16 @@ def drawBoard(src, moves =None):
         color_pic += 1
             
 
-def getPieceMoves():
+def getPieceMoves(checkedKing):
     piece = None
     moves = None
     mouse_pos = pygame.mouse.get_pos()
     mouse_pos = (floor(mouse_pos[0] / width), floor(mouse_pos[1] / height))
-    for pieces in all_pieces:
-        if((pieces.position == mouse_pos) and (pieces.visible)):
-            piece = pieces
-            moves = piece.getMoves(all_pieces)
+    if (checkedKing == None):
+        for pieces in all_pieces:
+            if((pieces.position == mouse_pos) and (pieces.visible)):
+                piece = pieces
+                moves = piece.getMoves(all_pieces)
             
     return piece, moves
 
@@ -105,6 +112,46 @@ def checkCapture(movedPiece):
     
     return pieceCaptured
 
+def check(movedPiece):
+    checked = False
+    checkedKing = None
+    mated = False
+    
+    for piece in all_pieces:
+        if (piece.color != movedPiece.color):
+            if (piece.position in movedPiece.getMoves(all_pieces)):
+                if (type(piece).__name__ == "king"):
+                    checked = True
+                    checkedKing = piece
+    if (checked):
+        print("Checked")
+        mated = mate(checkedKing)
+    else:
+        print("Not Checked")
+    
+    return checkedKing, mated
+
+def mate(king):
+    mated = False
+    otherMoves = None
+    
+    for piece in all_pieces:
+        startPos = piece.position
+        if (piece.color == king.color):
+            moves = piece.getMoves(all_pieces)
+            for move in moves:
+                piece.setPosition(move)
+
+        piece.setPosition(startPos)
+    if(king.getMoves(all_pieces) != [] or):
+        print(king.getMoves(all_pieces))
+        print("Not mate")
+    else:
+        mated = True
+        print("Mate")
+        
+    return mated
+
 def redraw(src, all_pieces, moves =None):
     drawBoard(src, moves)
     drawPieces(src, all_pieces)
@@ -116,7 +163,7 @@ def main():
     clock = pygame.time.Clock()
     clock.tick(50)
     redraw(src, all_pieces)
-    print("running...")
+    print("\nRunning...\n")
     loop(src)
     pygame.quit()
     
