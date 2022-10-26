@@ -1,13 +1,13 @@
 import pieces.gamePiece
 
 class rook(pieces.gamePiece.gamePiece):
-    def __init__(self, color, position, screenSize, visible):
+    def __init__(self, color, position, visible):
         if(color == 'white'):
             self.image = "pieces/images/wrook.png"
         elif (color == 'black'):
             self.image = "pieces/images/brook.png"
         self.moves = 0
-        super().__init__(self.image, color, position, screenSize, visible, self.moves)
+        super().__init__(self.image, color, position, visible, self.moves)
         
     def getMoves(self, all_pieces):
         # Get all possiable moves for piece

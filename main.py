@@ -11,21 +11,17 @@ black, white, green, red = (0, 0, 0), (255, 255, 255), (0, 255, 0), (255, 0, 0)
 pygame.init()
 
 info = pygame.display.Info()
-screen_size = [info.current_w/1.5, info.current_h/2]
-board_size = [(3*screen_size[0])/4, screen_size[1]]
-info_size = [screen_size[0]/4, screen_size[1]]
-width = board_size[0] / 8
-height = board_size[1] / 8
-white_pieces = [rook('white', (0, 7), board_size, True), knight('white', (1, 7), board_size, True),
-                bishop('white', (2, 7), board_size, True), queen('white', (3, 7), board_size, True),
-                king('white', (4, 7), board_size, True), bishop('white', (5, 7), board_size, True),
-                knight('white', (6, 7), board_size, True), rook('white', (7, 7), board_size, True),
-                pawn('white', (4, 6), board_size, True), ]
-black_pieces = [rook('black', (0, 0), board_size, True), knight('black', (1, 0), board_size, True),
-                bishop('black', (2, 0), board_size, True), queen('black', (3, 0), board_size, True),
-                king('black', (4, 0), board_size, True), bishop('black', (5, 0), board_size, True),
-                knight('black', (6, 0), board_size, True), rook('black', (7, 0), board_size, True),
-                pawn('black', (4, 1), board_size, True), ]
+screen_size = [info.current_w/2, info.current_h/2]
+white_pieces = [rook('white', (0, 7), True), knight('white', (1, 7), True),
+                bishop('white', (2, 7), True), queen('white', (3, 7), True),
+                king('white', (4, 7), True), bishop('white', (5, 7), True),
+                knight('white', (6, 7), True), rook('white', (7, 7), True),
+                pawn('white', (4, 6), True), ]
+black_pieces = [rook('black', (0, 0), True), knight('black', (1, 0), True),
+                bishop('black', (2, 0), True), queen('black', (3, 0), True),
+                king('black', (4, 0), True), bishop('black', (5, 0), True),
+                knight('black', (6, 0), True), rook('black', (7, 0), True),
+                pawn('black', (4, 1), True), ]
 all_pieces = []
 for piece in white_pieces:
     all_pieces.append(piece)
@@ -41,11 +37,19 @@ def loop(src):
     possibleMoves = None
     while not done:
         for event in pygame.event.get():
+            vidInfo = pygame.display.Info()
+            size = [(vidInfo.current_w), (vidInfo.current_h)]
+            board_size = [(2 * size[0]) / 3, size[1]]
+            width = board_size[0]/8
+            height = board_size[1]/8
+
             if event.type == pygame.QUIT:
                 done = True
 
             if event.type == pygame.VIDEORESIZE:
-                redraw(src, all_pieces, moves)
+                size = list(event.size)
+                board_size = [(2 * size[0]) / 3, size[1]]
+                redraw(src, all_pieces, board_size, moves)
 
             if event.type == pygame.MOUSEBUTTONUP:
                 moved = False
@@ -54,12 +58,12 @@ def loop(src):
                 if ((piece is not None) and (mouse_pos not in piece.getMoves(all_pieces))):
                     moves = None
                     piece = None
-                    redraw(src, all_pieces, moves)
+                    redraw(src, all_pieces, board_size)
                 else:
                     if ((piece is None)):
-                        piece, moves = getPieceMoves(checkedKing, possibleMoves)
+                        piece, moves = getPieceMoves(checkedKing, possibleMoves, mouse_pos)
                     if (piece is not None):
-                        moved = movePiece(piece, moves)
+                        moved = movePiece(piece, moves, mouse_pos)
                     if (moved):
                         checkedKing, mated, possibleMoves = kingChecked(piece)
                         if (mated):
@@ -68,18 +72,21 @@ def loop(src):
                         checkCapture(piece)
                         moves = None
                         piece = None
-                    redraw(src, all_pieces, moves)
+                    redraw(src, all_pieces, board_size, moves)
 
         pygame.display.flip()
 
 
-def drawPieces(src, pieceList):
+def drawPieces(src, pieceList, size):
     for piece in pieceList:
+        piece.setSize(size)
         piece.drawPiece(src, piece.position)
 
 
-def drawBoard(src, moves=None):
+def drawBoard(src, size, moves=None):
     color_pic = 0
+    width = size[0] / 8
+    height = size[1] / 8
 
     for y in range(8):
         for x in range(8):
@@ -98,11 +105,9 @@ def drawBoard(src, moves=None):
         color_pic += 1
 
 
-def getPieceMoves(checkedKing, possibleMoves):
+def getPieceMoves(checkedKing, possibleMoves, mouse_pos):
     piece = None
     moves = []
-    mouse_pos = pygame.mouse.get_pos()
-    mouse_pos = (floor(mouse_pos[0] / width), floor(mouse_pos[1] / height))
     if (checkedKing is None):
         for pieces in all_pieces:
             if ((pieces.position == mouse_pos) and (pieces.visible)):
@@ -122,10 +127,8 @@ def getPieceMoves(checkedKing, possibleMoves):
     return piece, moves
 
 
-def movePiece(piece, moves):
+def movePiece(piece, moves, mouse_pos):
     output = False
-    mouse_pos = pygame.mouse.get_pos()
-    mouse_pos = (floor(mouse_pos[0] / width), floor(mouse_pos[1] / height))
     if (mouse_pos in moves):
         piece.setPosition(mouse_pos)
         output = True
@@ -203,18 +206,17 @@ def kingMated(king, movedPiece):
     return mated, possibleMoves
 
 
-def redraw(src, all_pieces, moves=None):
-    drawBoard(src, moves)
-    drawPieces(src, all_pieces)
+def redraw(src, all_pieces, size, moves=None):
+    drawBoard(src, size, moves)
+    drawPieces(src, all_pieces, size)
 
 
 def main():
-    print(info)
     src = pygame.display.set_mode(screen_size, pygame.RESIZABLE)
     pygame.display.set_caption('Chess')
     clock = pygame.time.Clock()
     clock.tick(50)
-    redraw(src, all_pieces)
+    redraw(src, all_pieces, [(2*screen_size[0])/3, screen_size[1]])
     print("\nRunning...\n")
     loop(src)
     pygame.quit()
