@@ -78,7 +78,8 @@ class bishop(pieces.gamePiece.gamePiece):
     
     def setPosition(self, selectedPos):
         self.position = selectedPos
-        self.moves += 1
+        if(sys._getframe(1).f_code.co_name == "movePiece"):
+            self.moves += 1
         return(self.position)
     
     def setVisible(self, visible):

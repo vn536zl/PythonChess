@@ -122,7 +122,6 @@ class king(pieces.gamePiece.gamePiece):
         self.position = selectedPos
         if(sys._getframe(1).f_code.co_name == "movePiece"):
             self.moves += 1
-        
         return(self.position)
     
     def setVisible(self, visible):
