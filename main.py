@@ -49,7 +49,7 @@ def loop(src):
             if event.type == pygame.VIDEORESIZE:
                 size = list(event.size)
                 board_size = [(2 * size[0]) / 3, size[1]]
-                redraw(src, all_pieces, board_size, moves)
+                draw(src, all_pieces, board_size, moves)
 
             if event.type == pygame.MOUSEBUTTONUP:
                 moved = False
@@ -58,7 +58,7 @@ def loop(src):
                 if ((piece is not None) and (mouse_pos not in piece.getMoves(all_pieces))):
                     moves = None
                     piece = None
-                    redraw(src, all_pieces, board_size)
+                    draw(src, all_pieces, board_size)
                 else:
                     if ((piece is None)):
                         piece, moves = getPieceMoves(checkedKing, possibleMoves, mouse_pos)
@@ -72,7 +72,7 @@ def loop(src):
                         checkCapture(piece)
                         moves = None
                         piece = None
-                    redraw(src, all_pieces, board_size, moves)
+                    draw(src, all_pieces, board_size, moves)
 
         pygame.display.flip()
 
@@ -169,6 +169,7 @@ def kingChecked(movedPiece):
 
 def checkOtherMoves(king, movedPiece):
     possibleMoves = {}
+    posit = 0
 
     for piece in all_pieces:
         if (piece.color == king.color):
@@ -183,8 +184,9 @@ def checkOtherMoves(king, movedPiece):
                     if (king.position not in movedPiece.getMoves(all_pieces)):
                         movesPerPiece.append(move)
                     piece.setPosition(originalPos)
-            key = (type(piece).__name__) + " " + str(piece.position[0])
+            key = (type(piece).__name__) + " " + str(posit)
             possibleMoves.update({key: movesPerPiece})
+            posit += 1
 
     return possibleMoves
 
@@ -206,7 +208,7 @@ def kingMated(king, movedPiece):
     return mated, possibleMoves
 
 
-def redraw(src, all_pieces, size, moves=None):
+def draw(src, all_pieces, size, moves=None):
     drawBoard(src, size, moves)
     drawPieces(src, all_pieces, size)
 
@@ -216,7 +218,7 @@ def main():
     pygame.display.set_caption('Chess')
     clock = pygame.time.Clock()
     clock.tick(50)
-    redraw(src, all_pieces, [(2*screen_size[0])/3, screen_size[1]])
+    draw(src, all_pieces, [(2*screen_size[0])/3, screen_size[1]])
     print("\nRunning...\n")
     loop(src)
     pygame.quit()
