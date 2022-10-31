@@ -1,6 +1,8 @@
 import pygame
+import sys
 
-class gamePiece(pygame.sprite.Sprite):
+
+class GamePiece(pygame.sprite.Sprite):
 
     def __init__(self, image, color, position, visible, moves):
         super().__init__()
@@ -21,14 +23,18 @@ class gamePiece(pygame.sprite.Sprite):
         elif self.width + self.height == 0:
             print("Set the width and height")
             
-    def getMoves(self):
+    def getMoves(self, all_pieces):
         raise NotImplementedError("Please implement getMoves")
-    
-    def setPosition(self):
-        raise NotImplementedError("Please implement setPosition")
-    
-    def setVisible(self):
-        raise NotImplementedError("Please implement setVisible")
+
+    def setPosition(self, selectedPos):
+        self.position = selectedPos
+        if (sys._getframe(1).f_code.co_name == "movePiece"):
+            self.moves += 1
+        return (self.position)
+
+    def setVisible(self, visible):
+        self.visible = visible
+        return (self.visible)
     
     def setSize(self, size):
         self.width = size[0]/8

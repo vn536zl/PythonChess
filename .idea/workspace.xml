@@ -4,16 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d1ad7de-a7c5-4d2e-b233-0827eb071f17" name="Changes" comment="resizing the window">
+    <list default="true" id="0d1ad7de-a7c5-4d2e-b233-0827eb071f17" name="Changes" comment="resizeable window">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/launch.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vscode/launch.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pieces/bishop.py" beforeDir="false" afterPath="$PROJECT_DIR$/pieces/bishop.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pieces/gamePiece.py" beforeDir="false" afterPath="$PROJECT_DIR$/pieces/gamePiece.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pieces/king.py" beforeDir="false" afterPath="$PROJECT_DIR$/pieces/king.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pieces/knight.py" beforeDir="false" afterPath="$PROJECT_DIR$/pieces/knight.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pieces/pawn.py" beforeDir="false" afterPath="$PROJECT_DIR$/pieces/pawn.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pieces/queen.py" beforeDir="false" afterPath="$PROJECT_DIR$/pieces/queen.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pieces/rook.py" beforeDir="false" afterPath="$PROJECT_DIR$/pieces/rook.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pieces/bishop.py" beforeDir="false" afterPath="$PROJECT_DIR$/pieces/Bishop.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pieces/gamePiece.py" beforeDir="false" afterPath="$PROJECT_DIR$/pieces/GamePiece.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pieces/king.py" beforeDir="false" afterPath="$PROJECT_DIR$/pieces/King.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pieces/knight.py" beforeDir="false" afterPath="$PROJECT_DIR$/pieces/Knight.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pieces/pawn.py" beforeDir="false" afterPath="$PROJECT_DIR$/pieces/Pawn.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pieces/queen.py" beforeDir="false" afterPath="$PROJECT_DIR$/pieces/Queen.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pieces/rook.py" beforeDir="false" afterPath="$PROJECT_DIR$/pieces/Rook.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,6 +34,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectId" id="2GH0uLVUfL2VIvj8hEXKIg0QL2N" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -40,21 +45,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "ToolWindowChanges.ShowToolbar": "false",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/JISAAPP/PycharmProjects/PythonChess",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "Errors"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;ToolWindowChanges.ShowToolbar&quot;: &quot;false&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/JISAAPP/PycharmProjects/PythonChess&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;aDefault&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;Errors&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\JISAAPP\PycharmProjects\PythonChess" />
@@ -95,7 +101,8 @@
       <updated>1666030425494</updated>
       <workItem from="1666030429327" duration="9615000" />
       <workItem from="1666787420926" duration="3598000" />
-      <workItem from="1666800303864" duration="2115000" />
+      <workItem from="1666800303864" duration="8427000" />
+      <workItem from="1666975247035" duration="783000" />
     </task>
     <task id="LOCAL-00001" summary="resizing the window">
       <created>1666791736121</created>
@@ -104,7 +111,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666791736121</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="resizeable window">
+      <created>1666802739441</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1666802739441</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -136,9 +150,21 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="resizing the window" />
-    <option name="LAST_COMMIT_MESSAGE" value="resizing the window" />
+    <MESSAGE value="resizeable window" />
+    <option name="LAST_COMMIT_MESSAGE" value="resizeable window" />
+  </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="PythonConfigurationType" />
+      <inline-watch fileUrl="file://$PROJECT_DIR$/main.py" line="185">
+        <watch expression="move == movedPiece.position" />
+      </inline-watch>
+      <inline-watch fileUrl="file://$PROJECT_DIR$/main.py" line="187">
+        <watch expression="move in movedPiece.getMoves(all_pieces)" language="Python" />
+      </inline-watch>
+    </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/PythonChess$ChessRun.coverage" NAME="ChessRun Coverage Results" MODIFIED="1666802366923" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/PythonChess$ChessRun.coverage" NAME="ChessRun Coverage Results" MODIFIED="1666975434930" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

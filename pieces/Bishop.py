@@ -1,31 +1,32 @@
-import pieces.gamePiece
+import pieces.GamePiece
 
-class bishop(pieces.gamePiece.gamePiece):
+
+class Bishop(pieces.GamePiece.GamePiece):
     def __init__(self, color, position, visible):
         if(color == 'white'):
-            self.image = "pieces/images/wbishop.png"
+            self.imageFile = "pieces/images/wbishop.png"
         elif (color == 'black'):
-            self.image = "pieces/images/bbishop.png"
+            self.imageFile = "pieces/images/bbishop.png"
         self.moves = 0
-        super().__init__(self.image, color, position, visible, self.moves)
+        super().__init__(self.imageFile, color, position, visible, self.moves)
         
     def getMoves(self, all_pieces):
-        # Get all possiable moves for piece
+        # Get all possible moves for piece
         moveList = []
         for y in range(8):
-                for x in range(8):
-                    move = (x,y)
-                    i = 1
-                    while(i < 8):
-                        if(move == (self.position[0] + i, self.position[1] + i)):
-                            moveList.append(move)
-                        elif(move == (self.position[0] - i, self.position[1] + i)):
-                            moveList.append(move)
-                        elif(move == (self.position[0] + i, self.position[1] - i)):
-                            moveList.append(move)
-                        elif(move == (self.position[0] - i, self.position[1] - i)):
-                            moveList.append(move)
-                        i += 1
+            for x in range(8):
+                move = (x, y)
+                i = 1
+                while(i < 8):
+                    if(move == (self.position[0] + i, self.position[1] + i)):
+                        moveList.append(move)
+                    elif(move == (self.position[0] - i, self.position[1] + i)):
+                        moveList.append(move)
+                    elif(move == (self.position[0] + i, self.position[1] - i)):
+                        moveList.append(move)
+                    elif(move == (self.position[0] - i, self.position[1] - i)):
+                        moveList.append(move)
+                    i += 1
                
         # Remove piece position from list
         if (self.position in moveList):
@@ -33,7 +34,7 @@ class bishop(pieces.gamePiece.gamePiece):
     
         # remove other pieces position from list
         for piece in all_pieces:
-            if(piece.visible == False):
+            if(piece.visible is False):
                 continue
             
             if((piece.position in moveList) and (piece.color == self.color)):
@@ -75,13 +76,3 @@ class bishop(pieces.gamePiece.gamePiece):
                         moveList.remove((pieceX, pieceY))
 
         return moveList
-    
-    def setPosition(self, selectedPos):
-        self.position = selectedPos
-        if(sys._getframe(1).f_code.co_name == "movePiece"):
-            self.moves += 1
-        return(self.position)
-    
-    def setVisible(self, visible):
-        self.visible = visible
-        return(self.visible)
