@@ -1,6 +1,6 @@
 import pygame
 import sys
-
+import yaml
 
 class GamePiece(pygame.sprite.Sprite):
 

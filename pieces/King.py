@@ -107,7 +107,7 @@ class King(pieces.GamePiece.GamePiece):
                         moveList.remove((self.position[0], pieceY))
 
             # Remove self-checking moves
-            if ((piece.color != self.color) and (sys._getframe(1).f_code.co_name == "movePiece")):
+            if ((piece.color != self.color) and (sys._getframe(1).f_code.co_name != "getMoves")):
                 pieceMoves = piece.getMoves(all_pieces)
                 for move in pieceMoves:
                     if move in moveList:

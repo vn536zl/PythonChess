@@ -1,5 +1,6 @@
 from math import *
 import pygame
+import yaml
 
 from pieces.GamePiece import GamePiece
 from pieces.Bishop import Bishop
@@ -9,12 +10,13 @@ from pieces.Pawn import Pawn
 from pieces.Queen import Queen
 from pieces.Rook import Rook
 
+with open("app_constanst.yaml", 'r') as f:
+    configFile = yaml.safe_load(f)
 
+print(configFile['app']['env'])
 black, white, green = (0, 0, 0), (255, 255, 255), (0, 150, 0),
-pygame.init()
 
-info = pygame.display.Info()
-screen_size = [info.current_w/2, info.current_h/2]
+screen_size = [550, 450]
 white_pieces = [Rook('white', (0, 7), True), Knight('white', (1, 7), True),
                 Bishop('white', (2, 7), True), Queen('white', (3, 7), True),
                 King('white', (4, 7), True), Bishop('white', (5, 7), True),
@@ -153,7 +155,7 @@ def checkCapture(movedPiece):
 
 
 def KingChecked(movedPiece):
-    print(type(movedPiece))
+    # print(type(movedPiece))
     checked = False
     checkedKing = None
     mated = False
@@ -177,21 +179,28 @@ def KingChecked(movedPiece):
 def checkOtherMoves(King, movedPiece):
     possibleMoves = {}
     posit = 0
+    kingOriginalPosition = King.position
 
-    for piece in all_pieces:
-        if (piece.color == King.color):
+    for friendPiece in all_pieces:
+        if (friendPiece.color == King.color):
             movesPerPiece = []
-            moves = piece.getMoves(all_pieces)
+            moves = friendPiece.getMoves(all_pieces)
             for move in moves:
-                if (move == movedPiece.position):
+                originalPos = friendPiece.position
+                friendPiece.setPosition(move)
+                allEnemyMoves = []
+                for enemyPieces in all_pieces:
+                    if (enemyPieces.color != King.color):
+                        enemyMoves = enemyPieces.getMoves(all_pieces)
+                        for enemyMove in enemyMoves:
+                            allEnemyMoves.append(enemyMove)
+                # print(allEnemyMoves)
+                if (kingOriginalPosition not in allEnemyMoves):
+                    print(move, "Valid Move")
                     movesPerPiece.append(move)
-                if (move in movedPiece.getMoves(all_pieces)):
-                    originalPos = piece.position
-                    piece.setPosition(move)
-                    if (King.position not in movedPiece.getMoves(all_pieces)):
-                        movesPerPiece.append(move)
-                    piece.setPosition(originalPos)
-            key = (type(piece).__name__) + " " + str(posit)
+                friendPiece.setPosition(originalPos)
+
+            key = (type(friendPiece).__name__) + " " + str(posit)
             possibleMoves.update({key: movesPerPiece})
             posit += 1
 
@@ -203,9 +212,7 @@ def KingMated(King: GamePiece, movedPiece):
 
     possibleMoves = checkOtherMoves(King, movedPiece)
 
-    if (King.getMoves(all_pieces) != [] or possibleMoves != {}):
-        key = type(King).__name__ + " " + str(King.position[0])
-        possibleMoves.update({key: King.getMoves(all_pieces)})
+    if (possibleMoves != {}):
         print(possibleMoves)
         print("Not mate")
     else:
@@ -222,7 +229,7 @@ def draw(src, all_pieces, size, moves=None):
 
 def main():
     src = pygame.display.set_mode(screen_size, pygame.RESIZABLE)
-    pygame.display.set_caption('Chess')
+    pygame.display.set_caption(configFile['app']['title'])
     clock = pygame.time.Clock()
     clock.tick(50)
     draw(src, all_pieces, [(2*screen_size[0])/3, screen_size[1]])
