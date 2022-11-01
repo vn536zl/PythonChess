@@ -1,6 +1,6 @@
 import pygame
 import sys
-import yaml
+
 
 class GamePiece(pygame.sprite.Sprite):
 
@@ -14,6 +14,7 @@ class GamePiece(pygame.sprite.Sprite):
         self.moves = moves
         self.width = 0
         self.height = 0
+        self.all_pieces = []
         
     def drawPiece(self, src, position):
         if (self.visible) and (self.width + self.height != 0):
@@ -23,7 +24,7 @@ class GamePiece(pygame.sprite.Sprite):
         elif self.width + self.height == 0:
             print("Set the width and height")
             
-    def getMoves(self, all_pieces):
+    def getMoves(self):
         raise NotImplementedError("Please implement getMoves")
 
     def setPosition(self, selectedPos):
@@ -39,3 +40,8 @@ class GamePiece(pygame.sprite.Sprite):
     def setSize(self, size):
         self.width = size[0]/8
         self.height = size[1]/8
+
+    def loadPieces(self, all_pieces):
+        for piece in all_pieces:
+            if (piece.visible):
+                self.all_pieces.append(piece)

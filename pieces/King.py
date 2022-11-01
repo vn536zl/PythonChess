@@ -11,7 +11,7 @@ class King(pieces.GamePiece.GamePiece):
         self.moves = 0
         super().__init__(self.imageFile, color, position, visible, self.moves)
 
-    def getMoves(self, all_pieces):
+    def getMoves(self):
         # Get all possible moves for piece
         moveList = []
         for y in range(8):
@@ -40,10 +40,7 @@ class King(pieces.GamePiece.GamePiece):
             moveList.remove(self.position)
 
         # remove other pieces position from list
-        for piece in all_pieces:
-            if (piece.visible is False):
-                continue
-
+        for piece in self.all_pieces:
             if ((piece.position in moveList) and (piece.color == self.color)):
                 moveList.remove(piece.position)
 
@@ -108,7 +105,7 @@ class King(pieces.GamePiece.GamePiece):
 
             # Remove self-checking moves
             if ((piece.color != self.color) and (sys._getframe(1).f_code.co_name != "getMoves")):
-                pieceMoves = piece.getMoves(all_pieces)
+                pieceMoves = piece.getMoves()
                 for move in pieceMoves:
                     if move in moveList:
                         moveList.remove(move)
