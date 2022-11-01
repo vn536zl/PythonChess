@@ -71,7 +71,7 @@ def getPieceMoves(turn: int, mouse_pos: tuple, checkedKing = None, possibleMoves
         for pieces in teamsPieces:
             if ((pieces.position == mouse_pos) and (pieces.visible)):
                 for pieceKey, possMoves in possibleMoves.items():
-                    testToKey = type(pieces).__name__ + " " + str(pieces.position[0])
+                    testToKey = type(pieces).__name__ + " " + str(pieces.position[0] + pieces.position[1])
                     if (testToKey == pieceKey):
                         for pieceMoves in pieces.getMoves():
                             if pieceMoves in possMoves:
@@ -104,7 +104,6 @@ def checkCapture(movedPiece):
 # Check other pieces for move when checked
 def checkOtherMoves(king):
     possibleMoves = {}
-    posit = 0
 
     for friendPiece in all_pieces:
         if (friendPiece.color == king.color):
@@ -123,9 +122,8 @@ def checkOtherMoves(king):
                     movesPerPiece.append(move)
                 friendPiece.setPosition(originalPos)
 
-            key = (type(friendPiece).__name__) + " " + str(posit)
+            key = type(friendPiece).__name__ + " " + str(friendPiece.position[0] + friendPiece.position[1])
             possibleMoves.update({key: movesPerPiece})
-            posit += 1
 
     return possibleMoves
 
@@ -144,10 +142,7 @@ def KingChecked(movedPiece):
                     checked = True
                     checkedKing = piece
     if (checked):
-        print("Checked")
         mated, possibleMoves = KingMated(checkedKing)
-    else:
-        print("Not Checked")
 
     return checkedKing, mated, possibleMoves
 
@@ -161,11 +156,8 @@ def KingMated(king):
     for val in possibleMoves.values():
         totalVal += val
 
-    print(possibleMoves)
     if(totalVal == []):
-        print('mate')
-    else:
-        print("not mate")
+        mated = True
 
     return mated, possibleMoves
 
@@ -174,6 +166,20 @@ def KingMated(king):
 def draw(src: pygame.Surface, size: list, moves=None):
     drawBoard(src, size, moves)
     drawPieces(src, size)
+
+
+def gameEnd(screenSize: list):
+    width = screenSize[0]/2
+    height = screenSize[1]/4
+
+    surface = pygame.Surface(screenSize)
+    surface.fill(white)
+    rect = pygame.draw.rect(surface, black, [0, 0, width, height])
+    textObject = pygame.font.SysFont('Arial', 25).render("Retry?", True, white)
+    textRect = textObject.get_rect(center=rect.center)
+
+    surface.blit(textObject, textRect)
+
 
 
 # Main loop for pygame events
@@ -218,8 +224,7 @@ def loop(src: pygame.Surface):
                         checkCapture(piece)
                         checkedKing, mated, possibleMoves = KingChecked(piece)
                         if (mated):
-                            done = True
-                            break
+                            gameEnd(size)
                         moves = None
                         piece = None
                         turn += 1
