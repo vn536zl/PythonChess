@@ -53,16 +53,22 @@ def drawBoard(src: pygame.Surface, size: list, moves: list = None):
 
 
 # Get all the moves each piece is able to make
-def getPieceMoves(checkedKing, possibleMoves: dict, mouse_pos: tuple):
+def getPieceMoves(turn: int, mouse_pos: tuple, checkedKing = None, possibleMoves: dict = None):
     piece = None
     moves = []
+
+    if (turn % 2 == 0):
+        teamsPieces = black_pieces
+    else:
+        teamsPieces = white_pieces
+
     if (checkedKing is None):
-        for pieces in all_pieces:
+        for pieces in teamsPieces:
             if ((pieces.position == mouse_pos) and (pieces.visible)):
                 piece = pieces
                 moves = piece.getMoves()
     elif (checkedKing is not None):
-        for pieces in all_pieces:
+        for pieces in teamsPieces:
             if ((pieces.position == mouse_pos) and (pieces.visible)):
                 for pieceKey, possMoves in possibleMoves.items():
                     testToKey = type(pieces).__name__ + " " + str(pieces.position[0])
@@ -177,6 +183,8 @@ def loop(src: pygame.Surface):
     moves = None
     checkedKing = None
     possibleMoves = None
+    turn = 1
+
     while not done:
         for event in pygame.event.get():
             vidInfo = pygame.display.Info()
@@ -203,17 +211,18 @@ def loop(src: pygame.Surface):
                     draw(src, board_size)
                 else:
                     if ((piece is None)):
-                        piece, moves = getPieceMoves(checkedKing, possibleMoves, mouse_pos)
+                        piece, moves = getPieceMoves(turn, mouse_pos, checkedKing, possibleMoves)
                     if (piece is not None):
                         moved = movePiece(piece, moves, mouse_pos)
                     if (moved):
                         checkCapture(piece)
                         checkedKing, mated, possibleMoves = KingChecked(piece)
-                        # if (mated):
-                        #     done = True
-                        #     break
+                        if (mated):
+                            done = True
+                            break
                         moves = None
                         piece = None
+                        turn += 1
                     draw(src, board_size, moves)
 
         pygame.display.flip()

@@ -4,14 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d1ad7de-a7c5-4d2e-b233-0827eb071f17" name="Changes" comment="external .py file for config">
-      <change afterPath="$PROJECT_DIR$/pkgs.txt" afterDir="false" />
+    <list default="true" id="0d1ad7de-a7c5-4d2e-b233-0827eb071f17" name="Changes" comment="King mate">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app_constanst.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_constanst.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pieces/GamePiece.py" beforeDir="false" afterPath="$PROJECT_DIR$/pieces/GamePiece.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pieces/King.py" beforeDir="false" afterPath="$PROJECT_DIR$/pieces/King.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,7 +100,7 @@
       <workItem from="1666975247035" duration="783000" />
       <workItem from="1667243109429" duration="2784000" />
       <workItem from="1667305024642" duration="12525000" />
-      <workItem from="1667324838337" duration="5868000" />
+      <workItem from="1667324838337" duration="7131000" />
     </task>
     <task id="LOCAL-00001" summary="resizing the window">
       <created>1666791736121</created>
@@ -141,7 +137,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667323151125</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="King mate">
+      <created>1667330961716</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1667330961716</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -176,10 +179,18 @@
     <MESSAGE value="resizeable window" />
     <MESSAGE value="extrenal config yaml" />
     <MESSAGE value="external .py file for config" />
-    <option name="LAST_COMMIT_MESSAGE" value="external .py file for config" />
+    <MESSAGE value="King mate" />
+    <option name="LAST_COMMIT_MESSAGE" value="King mate" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/main.py</url>
+          <line>59</line>
+          <option name="timeStamp" value="30" />
+        </line-breakpoint>
+      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
@@ -189,21 +200,24 @@
       </default-breakpoints>
     </breakpoint-manager>
     <watches-manager>
-      <inline-watch fileUrl="file://$PROJECT_DIR$/main.py" line="113">
+      <inline-watch fileUrl="file://$PROJECT_DIR$/main.py" line="117">
         <watch expression="(enemyPieces.color != king.color) and (friendPiece.position != enemyPieces.position)" />
       </inline-watch>
-      <inline-watch fileUrl="file://$PROJECT_DIR$/main.py" line="120">
+      <inline-watch fileUrl="file://$PROJECT_DIR$/main.py" line="122">
         <watch expression="movesPerPiece.append(move)" />
       </inline-watch>
-      <inline-watch fileUrl="file://$PROJECT_DIR$/main.py" line="118">
+      <inline-watch fileUrl="file://$PROJECT_DIR$/main.py" line="121">
         <watch expression="kingOriginalPosition not in allEnemyMoves" />
       </inline-watch>
-      <inline-watch fileUrl="file://$PROJECT_DIR$/main.py" line="105">
+      <inline-watch fileUrl="file://$PROJECT_DIR$/main.py" line="109">
         <watch expression="friendPiece.color == king.color" />
+      </inline-watch>
+      <inline-watch fileUrl="file://$PROJECT_DIR$/main.py" line="59">
+        <watch expression="turn % 2 == 0" />
       </inline-watch>
     </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/PythonChess$ChessRun.coverage" NAME="ChessRun Coverage Results" MODIFIED="1667330749030" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/PythonChess$ChessRun.coverage" NAME="ChessRun Coverage Results" MODIFIED="1667332024255" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
