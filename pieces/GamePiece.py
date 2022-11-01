@@ -1,7 +1,6 @@
 import pygame
 import sys
 
-
 class GamePiece(pygame.sprite.Sprite):
 
     def __init__(self, image, color, position, visible, moves):

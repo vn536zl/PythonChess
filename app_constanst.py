@@ -1,4 +1,5 @@
 
+# Import Piece definition
 from pieces.Bishop import Bishop
 from pieces.King import King
 from pieces.Knight import Knight
@@ -25,21 +26,21 @@ for piece in black_pieces:
 
 config = {
     'app': {
-      'env': 'dev',
-      'title': 'PyChess'
+        'env': 'dev',
+        'title': 'PyChess'
     },
 
     'screenSize': [550, 450],
 
     'color': {
-      'black': (0, 0, 0),
-      'white': (255, 255, 255),
-      'green': (0, 150, 0)
+        'black': (0, 0, 0),
+        'white': (255, 255, 255),
+        'green': (0, 150, 0)
     },
 
     'pieces': {
-      'whitePieces': white_pieces,
-      'blackPieces': black_pieces,
-      'allPieces': all_pieces
+        'whitePieces': white_pieces,
+        'blackPieces': black_pieces,
+        'allPieces': all_pieces
     }
 }

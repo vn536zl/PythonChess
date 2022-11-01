@@ -8,18 +8,18 @@ from app_constanst import config
 # Show Environment
 print('Environment:', config['app']['env'])
 
-# Define colors and starting screen size
+# Get colors and starting screen size
 black, white, green = config['color']['black'], config['color']['white'], config['color']['green']
 screen_size = config['screenSize']
 
-# Define pieces and starting positions
+# Get pieces and type
 white_pieces = config['pieces']['whitePieces']
 black_pieces = config['pieces']['blackPieces']
 all_pieces = config['pieces']['allPieces']
 
 
 # Set game piece size and give piece all available pieces
-def drawPieces(src, size):
+def drawPieces(src: pygame.Surface, size: list):
     for piece in all_pieces:
         piece.loadPieces(all_pieces)
         piece.setSize(size)
@@ -27,7 +27,7 @@ def drawPieces(src, size):
 
 
 # Draw the game board
-def drawBoard(src, size, moves=None):
+def drawBoard(src: pygame.Surface, size: list, moves: list = None):
     color_pic = 0
     width = size[0] / 8
     height = size[1] / 8
@@ -53,7 +53,7 @@ def drawBoard(src, size, moves=None):
 
 
 # Get all the moves each piece is able to make
-def getPieceMoves(checkedKing, possibleMoves, mouse_pos):
+def getPieceMoves(checkedKing, possibleMoves: dict, mouse_pos: tuple):
     piece = None
     moves = []
     if (checkedKing is None):
@@ -76,7 +76,7 @@ def getPieceMoves(checkedKing, possibleMoves, mouse_pos):
 
 
 # Function for moving game pieces
-def movePiece(piece, moves, mouse_pos):
+def movePiece(piece, moves: list, mouse_pos: tuple):
     output = False
     if (mouse_pos in moves):
         piece.setPosition(mouse_pos)
@@ -96,13 +96,12 @@ def checkCapture(movedPiece):
 
 
 # Check other pieces for move when checked
-def checkOtherMoves(King):
+def checkOtherMoves(king):
     possibleMoves = {}
     posit = 0
-    kingOriginalPosition = King.position
 
     for friendPiece in all_pieces:
-        if (friendPiece.color == King.color):
+        if (friendPiece.color == king.color):
             movesPerPiece = []
             moves = friendPiece.getMoves()
             for move in moves:
@@ -110,13 +109,11 @@ def checkOtherMoves(King):
                 friendPiece.setPosition(move)
                 allEnemyMoves = []
                 for enemyPieces in all_pieces:
-                    if (enemyPieces.color != King.color):
+                    if ((enemyPieces.color != king.color) and (friendPiece.position != enemyPieces.position)):
                         enemyMoves = enemyPieces.getMoves()
                         for enemyMove in enemyMoves:
                             allEnemyMoves.append(enemyMove)
-                # print(allEnemyMoves)
-                if (kingOriginalPosition not in allEnemyMoves):
-                    print(move, "Valid Move")
+                if (king.position not in allEnemyMoves):
                     movesPerPiece.append(move)
                 friendPiece.setPosition(originalPos)
 
@@ -129,7 +126,6 @@ def checkOtherMoves(King):
 
 # Check if king in check
 def KingChecked(movedPiece):
-    # print(type(movedPiece))
     checked = False
     checkedKing = None
     mated = False
@@ -151,29 +147,31 @@ def KingChecked(movedPiece):
 
 
 # Check if mate
-def KingMated(King):
+def KingMated(king):
     mated = False
 
-    possibleMoves = checkOtherMoves(King)
+    possibleMoves = checkOtherMoves(king)
+    totalVal = []
+    for val in possibleMoves.values():
+        totalVal += val
 
-    if (possibleMoves != {}):
-        print(possibleMoves)
-        print("Not mate")
+    print(possibleMoves)
+    if(totalVal == []):
+        print('mate')
     else:
-        mated = True
-        print("Mate")
+        print("not mate")
 
     return mated, possibleMoves
 
 
 # Single function for drawing board and pieces on screen
-def draw(src, size, moves=None):
+def draw(src: pygame.Surface, size: list, moves=None):
     drawBoard(src, size, moves)
     drawPieces(src, size)
 
 
 # Main loop for pygame events
-def loop(src):
+def loop(src: pygame.Surface):
     done = False
     piece = None
     moves = None
@@ -184,8 +182,8 @@ def loop(src):
             vidInfo = pygame.display.Info()
             size = [(vidInfo.current_w), (vidInfo.current_h)]
             board_size = [(2 * size[0]) / 3, size[1]]
-            width = board_size[0]/8
-            height = board_size[1]/8
+            width = board_size[0] / 8
+            height = board_size[1] / 8
 
             if event.type == pygame.QUIT:
                 done = True
@@ -211,9 +209,9 @@ def loop(src):
                     if (moved):
                         checkCapture(piece)
                         checkedKing, mated, possibleMoves = KingChecked(piece)
-                        if (mated):
-                            done = True
-                            break
+                        # if (mated):
+                        #     done = True
+                        #     break
                         moves = None
                         piece = None
                     draw(src, board_size, moves)
@@ -227,8 +225,8 @@ def main():
     pygame.display.set_caption(config['app']['title'])
     clock = pygame.time.Clock()
     clock.tick(50)
-    draw(src, [(2*screen_size[0])/3, screen_size[1]])
-    print("\nRunning...\n")
+    draw(src, [(2 * screen_size[0]) / 3, screen_size[1]])
+    print("Running...\n")
     loop(src)
     pygame.quit()
 
