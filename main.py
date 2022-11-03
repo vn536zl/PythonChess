@@ -25,7 +25,7 @@ def drawPieces(src: pygame.Surface, size: list, castle: bool, kingPiece):
         piece.setSize(size)
         if(castle):
             kingX, kingY = kingPiece.position
-            if(type(piece).__name__ == "Rook" and piece.color == kingPiece.color):
+            if(piece.name == "Rook" and piece.color == kingPiece.color):
                 if(piece.position == (kingX + 1, kingY)):
                     piece.setPosition((kingX - 1, kingY))
                 elif(piece.position == (kingX - 1, kingY)):
@@ -79,7 +79,7 @@ def getPieceMoves(turn: int, mouse_pos: tuple, checkedKing = None, possibleMoves
         for pieces in teamsPieces:
             if ((pieces.position == mouse_pos) and (pieces.visible)):
                 for pieceKey, possMoves in possibleMoves.items():
-                    testToKey = type(pieces).__name__ + " " + str(pieces.position[0] + pieces.position[1])
+                    testToKey = piece.name + " " + str(pieces.position[0] + pieces.position[1])
                     if (testToKey == pieceKey):
                         for pieceMoves in pieces.getMoves():
                             if pieceMoves in possMoves:
@@ -97,7 +97,7 @@ def movePiece(piece, moves: list, mouse_pos: tuple):
 
     if (mouse_pos in moves):
         piece.setPosition(mouse_pos)
-        if(type(piece).__name__ == "King"):
+        if(piece.name == "King"):
             if(mouse_pos[0] == 1 or mouse_pos[0] == 6):
                 castle = True
                 returnedPiece = piece
@@ -138,7 +138,7 @@ def checkOtherMoves(king):
                     movesPerPiece.append(move)
                 friendPiece.setPosition(originalPos)
 
-            key = type(friendPiece).__name__ + " " + str(friendPiece.position[0] + friendPiece.position[1])
+            key = friendPiece.name + " " + str(friendPiece.position[0] + friendPiece.position[1])
             possibleMoves.update({key: movesPerPiece})
 
     return possibleMoves
@@ -154,7 +154,7 @@ def KingChecked(movedPiece):
     for piece in all_pieces:
         if (piece.color != movedPiece.color):
             if (piece.position in movedPiece.getMoves()):
-                if (type(piece).__name__ == "King"):
+                if (piece.name == "King"):
                     checked = True
                     checkedKing = piece
     if (checked):

@@ -8,6 +8,7 @@ class Pawn(pieces.GamePiece.GamePiece):
         elif (color == 'black'):
             self.imageFile = "pieces/images/bpawn.png"
         self.moves = 0
+        self.name = type(self).__name__
         super().__init__(self.imageFile, color, position, visible, self.moves)
 
     def getMoves(self):
@@ -36,11 +37,16 @@ class Pawn(pieces.GamePiece.GamePiece):
 
         # remove other pieces position from list
         for piece in self.all_pieces:
-            if ((piece.position in moveList)):
+
+            if (piece.position in moveList):
                 moveList.remove(piece.position)
 
             pieceX = piece.position[0]
             pieceY = piece.position[1]
+
+            if ((type(piece).__name__ == type(self).__name__) and (piece.color != self.color) and (piece.moves == 1)):
+                if ((pieceX == self.position[0]+1 or pieceX == self.position[0]-1) and (pieceY == self.position[1]+1 or pieceY == self.position[1]-1)):
+                    moveList.append((pieceX, pieceY))
 
             # Remove Y positions where another piece is in the way
             if ((piece.position[1] > self.position[1]) and (pieceX == self.position[0])):

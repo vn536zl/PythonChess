@@ -8,6 +8,7 @@ class Queen(pieces.GamePiece.GamePiece):
         elif (color == 'black'):
             self.imageFile = "pieces/images/bqueen.png"
         self.moves = 0
+        self.name = type(self).__name__
         super().__init__(self.imageFile, color, position, visible, self.moves)
 
     def getMoves(self):
