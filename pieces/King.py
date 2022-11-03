@@ -39,8 +39,20 @@ class King(pieces.GamePiece.GamePiece):
         if (self.position in moveList):
             moveList.remove(self.position)
 
-        # remove other pieces position from list
+        # moves based on other pieces
         for piece in self.all_pieces:
+
+            # Castling
+            if (type(piece).__name__ == "Rook" and piece.color == self.color):
+                if ((self.moves == 0) and (piece.moves == 0)):
+                    pieceX, pieceY = piece.position
+                    x, y = self.position
+                    if (pieceX > x):
+                        moveList.append((pieceX - 1, y))
+                    elif (pieceX < x):
+                        moveList.append((pieceX + 1, y))
+
+            # remove other friendly pieces position from list
             if ((piece.position in moveList) and (piece.color == self.color)):
                 moveList.remove(piece.position)
 
