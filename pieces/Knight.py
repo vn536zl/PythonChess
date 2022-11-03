@@ -9,6 +9,7 @@ class Knight(pieces.GamePiece.GamePiece):
             self.imageFile = "pieces/images/bknight.png"
         self.moves = 0
         self.name = type(self).__name__
+        self.id = type(self).__name__ + str(position[0]) + str(position[1])
         super().__init__(self.imageFile, color, position, visible, self.moves)
 
     def getMoves(self):

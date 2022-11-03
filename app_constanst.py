@@ -24,10 +24,14 @@ for i in range(8):
     white_pieces.append(Pawn('white', (i, 6), True))
 
 all_pieces = []
+black_defaults = []
+white_defaults = []
 for piece in white_pieces:
     all_pieces.append(piece)
+    white_defaults.append({'Name': piece.getID(), 'Visibility': piece.getVisible(), 'Position': piece.getPosition()})
 for piece in black_pieces:
     all_pieces.append(piece)
+    black_defaults.append({'Name': piece.getID(), 'Visibility': piece.getVisible(), 'Position': piece.getPosition()})
 
 config = {
     'app': {
@@ -45,7 +49,9 @@ config = {
 
     'pieces': {
         'whitePieces': white_pieces,
+        'whiteDefaults': white_defaults,
         'blackPieces': black_pieces,
+        'blackDefaults': black_defaults,
         'allPieces': all_pieces
     }
 }

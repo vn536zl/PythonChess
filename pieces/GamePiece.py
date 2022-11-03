@@ -16,6 +16,7 @@ class GamePiece(pygame.sprite.Sprite):
         self.height = 0
         self.all_pieces = []
         self.name = type(self).__name__
+        self.id = type(self).__name__ + str(position[0]) + str(position[1])
 
     def loadPieces(self, all_pieces):
         for piece in all_pieces:
@@ -45,6 +46,9 @@ class GamePiece(pygame.sprite.Sprite):
         self.width = size[0]/8
         self.height = size[1]/8
 
+    def setMove(self, num):
+        self.moves = num
+
     def getPosition(self):
         return self.position
 
@@ -56,3 +60,6 @@ class GamePiece(pygame.sprite.Sprite):
 
     def getColor(self):
         return self.color
+
+    def getID(self):
+        return self.id

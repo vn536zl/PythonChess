@@ -14,8 +14,31 @@ screen_size = config['screenSize']
 
 # Get pieces and type
 white_pieces = config['pieces']['whitePieces']
+white_defaults = config['pieces']['whiteDefaults']
 black_pieces = config['pieces']['blackPieces']
+black_defaults = config['pieces']['blackDefaults']
 all_pieces = config['pieces']['allPieces']
+
+
+def onReset():
+
+    for piece in all_pieces:
+        if piece.getColor() == "black":
+            for setting in black_defaults:
+                print(setting['Name'])
+                if (piece.getID() == setting['Name']):
+                    piece.setVisible(setting['Visibility'])
+                    piece.setPosition(setting['Position'])
+                    piece.setMove(0)
+        if piece.getColor() == "white":
+            for setting in white_defaults:
+                print(setting['Name'])
+                if (piece.getID() == setting['Name']):
+                    piece.setVisible(setting['Visibility'])
+                    piece.setPosition(setting['Position'])
+                    piece.setMove(0)
+
+    main()
 
 
 # Set game piece size and give piece all available pieces
@@ -23,12 +46,12 @@ def drawPieces(src: pygame.Surface, size: list, castle: bool, kingPiece):
     for piece in all_pieces:
         piece.loadPieces(all_pieces)
         piece.setSize(size)
-        if(castle):
+        if (castle):
             kingX, kingY = kingPiece.getPosition()
-            if(piece.getName() == "Rook" and piece.getColor() == kingPiece.getColor()):
-                if(piece.getPosition() == (kingX + 1, kingY)):
+            if (piece.getName() == "Rook" and piece.getColor() == kingPiece.getColor()):
+                if (piece.getPosition() == (kingX + 1, kingY)):
                     piece.setPosition((kingX - 1, kingY))
-                elif(piece.getPosition() == (kingX - 1, kingY)):
+                elif (piece.getPosition() == (kingX - 1, kingY)):
                     piece.setPosition((kingX + 1, kingY))
 
         piece.drawPiece(src, piece.getPosition())
@@ -61,8 +84,8 @@ def drawBoard(src: pygame.Surface, size: list, moves: list = None):
 
 
 # Get all the moves each piece is able to make
-def getPieceMoves(turn: int, mouse_pos: tuple, checkedKing = None, possibleMoves: dict = None):
-    piece = None
+def getPieceMoves(turn: int, mouse_pos: tuple, checkedKing=None, possibleMoves: dict = None):
+    returnedPiece = None
     moves = []
 
     if (turn % 2 == 0):
@@ -71,22 +94,22 @@ def getPieceMoves(turn: int, mouse_pos: tuple, checkedKing = None, possibleMoves
         teamsPieces = white_pieces
 
     if (checkedKing is None):
-        for pieces in teamsPieces:
-            if ((pieces.getPosition() == mouse_pos) and (pieces.getVisible())):
-                piece = pieces
+        for piece in teamsPieces:
+            if ((piece.getPosition() == mouse_pos) and (piece.getVisible())):
+                returnedPiece = piece
                 moves = piece.getMoves()
     elif (checkedKing is not None):
-        for pieces in teamsPieces:
-            if ((pieces.getPosition() == mouse_pos) and (pieces.getVisible())):
+        for piece in teamsPieces:
+            if ((piece.getPosition() == mouse_pos) and (piece.getVisible())):
                 for pieceKey, possMoves in possibleMoves.items():
-                    testToKey = piece.getName() + " " + str(pieces.getPosition()[0] + pieces.getPosition()[1])
+                    testToKey = piece.getID()
                     if (testToKey == pieceKey):
-                        for pieceMoves in pieces.getMoves():
+                        for pieceMoves in piece.getMoves():
                             if pieceMoves in possMoves:
-                                piece = pieces
+                                piece = piece
                                 moves.append(pieceMoves)
 
-    return piece, moves
+    return returnedPiece, moves
 
 
 # Function for moving game pieces
@@ -97,8 +120,8 @@ def movePiece(piece, moves: list, mouse_pos: tuple):
 
     if (mouse_pos in moves):
         piece.setPosition(mouse_pos)
-        if(piece.getName() == "King"):
-            if(mouse_pos[0] == 1 or mouse_pos[0] == 6):
+        if (piece.getName() == "King"):
+            if (mouse_pos[0] == 1 or mouse_pos[0] == 6):
                 castle = True
                 returnedPiece = piece
         output = True
@@ -116,7 +139,8 @@ def checkCapture(movedPiece):
         elif (movedPiece.getName() == "Pawn"):
             pawnX, pawnY = movedPiece.getPosition()
             if (piece.getName() == "Pawn" and piece.getColor() != movedPiece.getColor() and piece.moves == 1):
-                if ((piece.getPosition() == (pawnX, pawnY-1) and piece.getColor() == "white") or (piece.getPosition() == (pawnX, pawnY+1) and piece.getColor() == "black")):
+                if ((piece.getPosition() == (pawnX, pawnY - 1) and piece.getColor() == "white") or (
+                        piece.getPosition() == (pawnX, pawnY + 1) and piece.getColor() == "black")):
                     piece.setVisible(False)
                     pieceCaptured = True
 
@@ -136,7 +160,8 @@ def checkOtherMoves(king):
                 friendPiece.setPosition(move)
                 allEnemyMoves = []
                 for enemyPieces in all_pieces:
-                    if ((enemyPieces.getColor() != king.getColor()) and (friendPiece.getPosition() != enemyPieces.getPosition())):
+                    if ((enemyPieces.getColor() != king.getColor()) and (
+                            friendPiece.getPosition() != enemyPieces.getPosition())):
                         enemyMoves = enemyPieces.getMoves()
                         for enemyMove in enemyMoves:
                             allEnemyMoves.append(enemyMove)
@@ -144,7 +169,7 @@ def checkOtherMoves(king):
                     movesPerPiece.append(move)
                 friendPiece.setPosition(originalPos)
 
-            key = friendPiece.getName() + " " + str(friendPiece.getPosition()[0] + friendPiece.getPosition()[1])
+            key = friendPiece.getID()
             possibleMoves.update({key: movesPerPiece})
 
     return possibleMoves
@@ -178,14 +203,14 @@ def KingMated(king):
     for val in possibleMoves.values():
         totalVal += val
 
-    if(totalVal == []):
+    if (totalVal == []):
         mated = True
 
     return mated, possibleMoves
 
 
 # Single function for drawing board and pieces on screen
-def draw(src: pygame.Surface, size: list, castle: bool = None, kingPiece=None,  moves: list = None):
+def draw(src: pygame.Surface, size: list, castle: bool = None, kingPiece=None, moves: list = None):
     drawBoard(src, size, moves)
     drawPieces(src, size, castle, kingPiece)
 
@@ -195,16 +220,18 @@ def gameEnd(src: pygame.Surface):
 
     surface = pygame.Surface((width, height))
     surface.fill((150, 0, 0))
-    rect = pygame.draw.rect(surface, black, [width/2.6, height/2, width/4, height/6], border_radius=3)
+    retryButton = pygame.draw.rect(surface, black, [width / 2.6, height / 2, width / 4, height / 6], border_radius=3)
 
-    gameOverText = pygame.font.SysFont('impact', int(40*height/550)).render("Game Over!", True, black)
-    gameOverRect = gameOverText.get_rect(center=(width/2, height/3))
-    retryText = pygame.font.SysFont('impact', int(25*height/550)).render("Retry?", True, white)
-    retryRect = retryText.get_rect(center=rect.center)
+    gameOverText = pygame.font.SysFont('impact', int(40 * height / 550)).render("Game Over!", True, black)
+    gameOverRect = gameOverText.get_rect(center=(width / 2, height / 3))
+    retryText = pygame.font.SysFont('impact', int(25 * height / 550)).render("Retry?", True, white)
+    retryRect = retryText.get_rect(center=retryButton.center)
 
     surface.blit(retryText, retryRect)
     surface.blit(gameOverText, gameOverRect)
     src.blit(surface, (0, 0))
+
+    return retryButton
 
 
 # Main loop for pygame events
@@ -212,14 +239,16 @@ def loop(src: pygame.Surface):
     done = False
     piece = None
     moves = None
+    ended = False
     checkedKing = None
     possibleMoves = None
     turn = 1
     doDraw = True
     castle = False
     movedPiece = None
+    retryButton = None
 
-    while not done:
+    while (not done):
         for event in pygame.event.get():
             vidInfo = pygame.display.Info()
             size = [(vidInfo.current_w), (vidInfo.current_h)]
@@ -233,7 +262,7 @@ def loop(src: pygame.Surface):
             if event.type == pygame.VIDEORESIZE:
                 size = list(event.size)
                 board_size = [(2 * size[0]) / 3, size[1]]
-                if(doDraw):
+                if (doDraw):
                     draw(src, board_size, moves)
                 else:
                     gameEnd(src)
@@ -242,6 +271,16 @@ def loop(src: pygame.Surface):
                 moved = False
                 mouse_pos = pygame.mouse.get_pos()
                 mouse_pos = (floor(mouse_pos[0] / width), floor(mouse_pos[1] / height))
+
+                if (ended):
+                    mouseX, mouseY = pygame.mouse.get_pos()
+                    topLeft = retryButton.topleft
+                    topRight = retryButton.topright[0]
+                    bottomLeft = retryButton.bottomleft[1]
+
+                    if (topLeft[0] < mouseX < topRight and topLeft[1] < mouseY < bottomLeft):
+                        onReset()
+
                 if ((piece is not None) and (mouse_pos not in piece.getMoves())):
                     moves = None
                     piece = None
@@ -254,13 +293,15 @@ def loop(src: pygame.Surface):
                         checkCapture(piece)
                         checkedKing, mated, possibleMoves = KingChecked(piece)
                         if (mated):
-                            gameEnd(src)
+                            print("Ended")
+                            retryButton = gameEnd(src)
+                            ended = True
                             doDraw = False
                             break
                         moves = None
                         piece = None
                         turn += 1
-                if(doDraw):
+                if (doDraw):
                     draw(src, board_size, castle, movedPiece, moves)
 
         pygame.display.flip()
@@ -268,14 +309,19 @@ def loop(src: pygame.Surface):
 
 # main function setting defaults
 def main():
+
     pygame.init()
+
     src = pygame.display.set_mode(screen_size, pygame.RESIZABLE)
     pygame.display.set_caption(config['app']['title'])
+
     clock = pygame.time.Clock()
     clock.tick(50)
+
     draw(src, [(2 * screen_size[0]) / 3, screen_size[1]])
     print("Running...\n")
     loop(src)
+
     pygame.quit()
 
 

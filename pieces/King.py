@@ -10,6 +10,7 @@ class King(pieces.GamePiece.GamePiece):
             self.imageFile = "pieces/images/bking.png"
         self.moves = 0
         self.name = type(self).__name__
+        self.id = type(self).__name__ + str(position[0]) + str(position[1])
         super().__init__(self.imageFile, color, position, visible, self.moves)
 
     def getMoves(self):
@@ -44,21 +45,22 @@ class King(pieces.GamePiece.GamePiece):
         for piece in self.all_pieces:
 
             # Castling
-            if (type(piece).__name__ == "Rook" and piece.color == self.color):
+            if (type(piece).__name__ == "Rook" and piece.getColor() == self.color):
                 if ((self.moves == 0) and (piece.moves == 0)):
-                    pieceX, pieceY = piece.position
+                    pieceX, pieceY = piece.getPosition()
                     x, y = self.position
                     if (pieceX > x):
                         moveList.append((pieceX - 1, y))
                     elif (pieceX < x):
                         moveList.append((pieceX + 1, y))
 
+        for piece in self.all_pieces:
             # remove other friendly pieces position from list
-            if ((piece.position in moveList) and (piece.color == self.color)):
-                moveList.remove(piece.position)
+            if ((piece.getPosition() in moveList) and (piece.getColor() == self.color)):
+                moveList.remove(piece.getPosition())
 
             # Remove self-checking moves
-            if ((piece.color != self.color) and (sys._getframe(1).f_code.co_name != "getMoves")):
+            if ((piece.getColor() != self.color) and (sys._getframe(1).f_code.co_name != "getMoves")):
                 pieceMoves = piece.getMoves()
                 for move in pieceMoves:
                     if move in moveList:
