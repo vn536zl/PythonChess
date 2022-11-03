@@ -24,14 +24,14 @@ def drawPieces(src: pygame.Surface, size: list, castle: bool, kingPiece):
         piece.loadPieces(all_pieces)
         piece.setSize(size)
         if(castle):
-            kingX, kingY = kingPiece.position
-            if(piece.name == "Rook" and piece.color == kingPiece.color):
-                if(piece.position == (kingX + 1, kingY)):
+            kingX, kingY = kingPiece.getPosition()
+            if(piece.getName() == "Rook" and piece.getColor() == kingPiece.getColor()):
+                if(piece.getPosition() == (kingX + 1, kingY)):
                     piece.setPosition((kingX - 1, kingY))
-                elif(piece.position == (kingX - 1, kingY)):
+                elif(piece.getPosition() == (kingX - 1, kingY)):
                     piece.setPosition((kingX + 1, kingY))
 
-        piece.drawPiece(src, piece.position)
+        piece.drawPiece(src, piece.getPosition())
 
 
 # Draw the game board
@@ -72,14 +72,14 @@ def getPieceMoves(turn: int, mouse_pos: tuple, checkedKing = None, possibleMoves
 
     if (checkedKing is None):
         for pieces in teamsPieces:
-            if ((pieces.position == mouse_pos) and (pieces.visible)):
+            if ((pieces.getPosition() == mouse_pos) and (pieces.getVisible())):
                 piece = pieces
                 moves = piece.getMoves()
     elif (checkedKing is not None):
         for pieces in teamsPieces:
-            if ((pieces.position == mouse_pos) and (pieces.visible)):
+            if ((pieces.getPosition() == mouse_pos) and (pieces.getVisible())):
                 for pieceKey, possMoves in possibleMoves.items():
-                    testToKey = piece.name + " " + str(pieces.position[0] + pieces.position[1])
+                    testToKey = piece.getName() + " " + str(pieces.getPosition()[0] + pieces.getPosition()[1])
                     if (testToKey == pieceKey):
                         for pieceMoves in pieces.getMoves():
                             if pieceMoves in possMoves:
@@ -97,7 +97,7 @@ def movePiece(piece, moves: list, mouse_pos: tuple):
 
     if (mouse_pos in moves):
         piece.setPosition(mouse_pos)
-        if(piece.name == "King"):
+        if(piece.getName() == "King"):
             if(mouse_pos[0] == 1 or mouse_pos[0] == 6):
                 castle = True
                 returnedPiece = piece
@@ -109,10 +109,16 @@ def movePiece(piece, moves: list, mouse_pos: tuple):
 def checkCapture(movedPiece):
     pieceCaptured = False
 
-    for pieces in all_pieces:
-        if ((pieces.position == movedPiece.position) and (pieces.color != movedPiece.color)):
-            pieces.setVisible(False)
+    for piece in all_pieces:
+        if ((piece.getPosition() == movedPiece.getPosition()) and (piece.getColor() != movedPiece.getColor())):
+            piece.setVisible(False)
             pieceCaptured = True
+        elif (movedPiece.getName() == "Pawn"):
+            pawnX, pawnY = movedPiece.getPosition()
+            if (piece.getName() == "Pawn" and piece.getColor() != movedPiece.getColor() and piece.moves == 1):
+                if ((piece.getPosition() == (pawnX, pawnY-1) and piece.getColor() == "white") or (piece.getPosition() == (pawnX, pawnY+1) and piece.getColor() == "black")):
+                    piece.setVisible(False)
+                    pieceCaptured = True
 
     return pieceCaptured
 
@@ -122,23 +128,23 @@ def checkOtherMoves(king):
     possibleMoves = {}
 
     for friendPiece in all_pieces:
-        if (friendPiece.color == king.color):
+        if (friendPiece.getColor() == king.getColor()):
             movesPerPiece = []
             moves = friendPiece.getMoves()
             for move in moves:
-                originalPos = friendPiece.position
+                originalPos = friendPiece.getPosition()
                 friendPiece.setPosition(move)
                 allEnemyMoves = []
                 for enemyPieces in all_pieces:
-                    if ((enemyPieces.color != king.color) and (friendPiece.position != enemyPieces.position)):
+                    if ((enemyPieces.getColor() != king.getColor()) and (friendPiece.getPosition() != enemyPieces.getPosition())):
                         enemyMoves = enemyPieces.getMoves()
                         for enemyMove in enemyMoves:
                             allEnemyMoves.append(enemyMove)
-                if (king.position not in allEnemyMoves):
+                if (king.getPosition() not in allEnemyMoves):
                     movesPerPiece.append(move)
                 friendPiece.setPosition(originalPos)
 
-            key = friendPiece.name + " " + str(friendPiece.position[0] + friendPiece.position[1])
+            key = friendPiece.getName() + " " + str(friendPiece.getPosition()[0] + friendPiece.getPosition()[1])
             possibleMoves.update({key: movesPerPiece})
 
     return possibleMoves
@@ -152,9 +158,9 @@ def KingChecked(movedPiece):
     possibleMoves = None
 
     for piece in all_pieces:
-        if (piece.color != movedPiece.color):
-            if (piece.position in movedPiece.getMoves()):
-                if (piece.name == "King"):
+        if (piece.getColor() != movedPiece.getColor()):
+            if (piece.getPosition() in movedPiece.getMoves()):
+                if (piece.getName() == "King"):
                     checked = True
                     checkedKing = piece
     if (checked):

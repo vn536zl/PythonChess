@@ -1,6 +1,7 @@
 import pygame
 import sys
 
+
 class GamePiece(pygame.sprite.Sprite):
 
     def __init__(self, image, color, position, visible, moves):
@@ -14,7 +15,13 @@ class GamePiece(pygame.sprite.Sprite):
         self.width = 0
         self.height = 0
         self.all_pieces = []
-        
+        self.name = type(self).__name__
+
+    def loadPieces(self, all_pieces):
+        for piece in all_pieces:
+            if (piece.getVisible()):
+                self.all_pieces.append(piece)
+
     def drawPiece(self, src, position):
         if (self.visible) and (self.width + self.height != 0):
             self.rect = pygame.Rect((position[0] * self.width), (position[1] * self.height), self.width, self.height)
@@ -30,17 +37,22 @@ class GamePiece(pygame.sprite.Sprite):
         self.position = selectedPos
         if (sys._getframe(1).f_code.co_name == "movePiece"):
             self.moves += 1
-        return (self.position)
 
     def setVisible(self, visible):
         self.visible = visible
-        return (self.visible)
     
     def setSize(self, size):
         self.width = size[0]/8
         self.height = size[1]/8
 
-    def loadPieces(self, all_pieces):
-        for piece in all_pieces:
-            if (piece.visible):
-                self.all_pieces.append(piece)
+    def getPosition(self):
+        return self.position
+
+    def getVisible(self):
+        return self.visible
+
+    def getName(self):
+        return self.name
+
+    def getColor(self):
+        return self.color

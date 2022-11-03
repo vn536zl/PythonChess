@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d1ad7de-a7c5-4d2e-b233-0827eb071f17" name="Changes" comment="adding game over screen">
+    <list default="true" id="0d1ad7de-a7c5-4d2e-b233-0827eb071f17" name="Changes" comment="working on en passent / added name to pieces">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pieces/King.py" beforeDir="false" afterPath="$PROJECT_DIR$/pieces/King.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pieces/GamePiece.py" beforeDir="false" afterPath="$PROJECT_DIR$/pieces/GamePiece.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pieces/Pawn.py" beforeDir="false" afterPath="$PROJECT_DIR$/pieces/Pawn.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,7 +103,7 @@
       <workItem from="1667305024642" duration="12525000" />
       <workItem from="1667324838337" duration="9511000" />
       <workItem from="1667409376888" duration="6475000" />
-      <workItem from="1667484708188" duration="3770000" />
+      <workItem from="1667484708188" duration="6511000" />
     </task>
     <task id="LOCAL-00001" summary="resizing the window">
       <created>1666791736121</created>
@@ -160,7 +161,21 @@
       <option name="project" value="LOCAL" />
       <updated>1667336849934</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="king castling moves">
+      <created>1667488839611</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1667488839611</updated>
+    </task>
+    <task id="LOCAL-00010" summary="working on en passent / added name to pieces">
+      <created>1667489452467</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1667489452467</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -198,47 +213,12 @@
     <MESSAGE value="King mate" />
     <MESSAGE value="Turn based movement,&#10;All Pawns added" />
     <MESSAGE value="adding game over screen" />
-    <option name="LAST_COMMIT_MESSAGE" value="adding game over screen" />
+    <MESSAGE value="king castling moves" />
+    <MESSAGE value="working on en passent / added name to pieces" />
+    <option name="LAST_COMMIT_MESSAGE" value="working on en passent / added name to pieces" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main.py</url>
-          <line>28</line>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main.py</url>
-          <line>29</line>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main.py</url>
-          <line>30</line>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main.py</url>
-          <line>31</line>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main.py</url>
-          <line>100</line>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main.py</url>
-          <line>102</line>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main.py</url>
-          <line>101</line>
-          <option name="timeStamp" value="13" />
-        </line-breakpoint>
-      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
@@ -248,24 +228,15 @@
       </default-breakpoints>
     </breakpoint-manager>
     <watches-manager>
-      <inline-watch fileUrl="file://$PROJECT_DIR$/main.py" line="132">
-        <watch expression="(enemyPieces.color != king.color) and (friendPiece.position != enemyPieces.position)" />
+      <inline-watch fileUrl="file://$PROJECT_DIR$/main.py" line="30">
+        <watch expression="piece.position == (kingX - 1, kingY)" />
       </inline-watch>
-      <inline-watch fileUrl="file://$PROJECT_DIR$/main.py" line="136">
-        <watch expression="kingOriginalPosition not in allEnemyMoves" />
-      </inline-watch>
-      <inline-watch fileUrl="file://$PROJECT_DIR$/main.py" line="137">
-        <watch expression="movesPerPiece.append(move)" />
-      </inline-watch>
-      <inline-watch fileUrl="file://$PROJECT_DIR$/main.py" line="124">
-        <watch expression="friendPiece.color == king.color" />
-      </inline-watch>
-      <inline-watch fileUrl="file://$PROJECT_DIR$/main.py" line="67">
-        <watch expression="turn % 2 == 0" />
+      <inline-watch fileUrl="file://$PROJECT_DIR$/main.py" line="28">
+        <watch expression="piece.position == (kingX + 1, kingY)" />
       </inline-watch>
     </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/PythonChess$ChessRun.coverage" NAME="ChessRun Coverage Results" MODIFIED="1667488220564" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/PythonChess$ChessRun.coverage" NAME="ChessRun Coverage Results" MODIFIED="1667495513120" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
