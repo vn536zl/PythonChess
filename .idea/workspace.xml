@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d1ad7de-a7c5-4d2e-b233-0827eb071f17" name="Changes" comment="added reset method">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="0d1ad7de-a7c5-4d2e-b233-0827eb071f17" name="Changes" comment="merge main clean up" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -38,22 +36,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;ToolWindowChanges.ShowToolbar&quot;: &quot;false&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/JISAAPP/PycharmProjects/PythonChess&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;aDefault&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "ToolWindowChanges.ShowToolbar": "false",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/JISAAPP/PycharmProjects/PythonChess",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "run.code.analysis.last.selected.profile": "aDefault",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\JISAAPP\PycharmProjects\PythonChess" />
@@ -101,6 +100,7 @@
       <workItem from="1667324838337" duration="9511000" />
       <workItem from="1667409376888" duration="6475000" />
       <workItem from="1667484708188" duration="13369000" />
+      <workItem from="1667502759121" duration="316000" />
     </task>
     <task id="LOCAL-00001" summary="resizing the window">
       <created>1666791736121</created>
@@ -186,7 +186,21 @@
       <option name="project" value="LOCAL" />
       <updated>1667501298342</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="merge main">
+      <created>1667502932480</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1667502932480</updated>
+    </task>
+    <task id="LOCAL-00014" summary="merge main clean up">
+      <created>1667503070476</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1667503070476</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -228,7 +242,9 @@
     <MESSAGE value="working on en passent / added name to pieces" />
     <MESSAGE value="En Passant completed/ get methods for game pieces" />
     <MESSAGE value="added reset method" />
-    <option name="LAST_COMMIT_MESSAGE" value="added reset method" />
+    <MESSAGE value="merge main" />
+    <MESSAGE value="merge main clean up" />
+    <option name="LAST_COMMIT_MESSAGE" value="merge main clean up" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -257,13 +273,13 @@
         <watch expression="piece.position" />
       </configuration>
       <inline-watch fileUrl="file://$PROJECT_DIR$/pieces/King.py" line="57">
+        <watch expression="piece" language="Python" />
+      </inline-watch>
+      <inline-watch fileUrl="file://$PROJECT_DIR$/pieces/King.py" line="57">
         <watch expression="piece.getPosition()" language="Python" />
       </inline-watch>
       <inline-watch fileUrl="file://$PROJECT_DIR$/pieces/King.py" line="58">
         <watch expression="((piece.position in moveList) and (piece.color == self.color))" language="Python" />
-      </inline-watch>
-      <inline-watch fileUrl="file://$PROJECT_DIR$/pieces/King.py" line="57">
-        <watch expression="piece" language="Python" />
       </inline-watch>
     </watches-manager>
   </component>
