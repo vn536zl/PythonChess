@@ -1,190 +1,330 @@
+# Python libraries
+from math import *
 import pygame
-from rook import rook
-from bishop import bishop
 
-# var's
-black = (0, 0, 0)
-white = (255, 255, 255)
-grey = (128, 128, 128)
-green = (0, 255, 0)
-window_size = [350, 350]
-width = window_size[0] / 8
-height = window_size[1] / 8
-margin = 5
-# ['brook.png', 'bknight.png', 'bbishop.png', 'bqueen.png', 'bking.png']
-# ['wrook.png', 'wknight.png', 'wbishop.png', 'wqueen.png', 'wking.png']
-white_pieces = [rook('white', [4, 3], width, height, True), rook('white', [7, 0], width, height, True), bishop('white', [1, 0], width, height, True), bishop('white', [6, 0], width, height, True), bishop('white', [3, 3], width, height, True)]
-black_pieces = [rook('black', [0, 7], width, height, True), rook('black', [7, 7], width, height, True), bishop('black', [1, 7], width, height, True), bishop('black', [6, 7], width, height, True)]
-selectedPieces = []
+# external configfile
+from app_constanst import config
 
+# Show Environment
+print('Environment:', config['app']['env'])
 
-def drawPieces(src, pieces):
-    for piece in pieces:
-        # print(piece.getPosition())
-        piece.draw(src, piece.position)
+# Get colors and starting screen size
+black, white, green = config['color']['black'], config['color']['white'], config['color']['green']
+screen_size = config['screenSize']
+
+# Get pieces and type
+white_pieces = config['pieces']['whitePieces']
+white_defaults = config['pieces']['whiteDefaults']
+black_pieces = config['pieces']['blackPieces']
+black_defaults = config['pieces']['blackDefaults']
+all_pieces = config['pieces']['allPieces']
 
 
-def drawBoard(src):
+def onReset():
+
+    for piece in all_pieces:
+        if piece.getColor() == "black":
+            for setting in black_defaults:
+                print(setting['Name'])
+                if (piece.getID() == setting['Name']):
+                    piece.setVisible(setting['Visibility'])
+                    piece.setPosition(setting['Position'])
+                    piece.setMove(0)
+        if piece.getColor() == "white":
+            for setting in white_defaults:
+                print(setting['Name'])
+                if (piece.getID() == setting['Name']):
+                    piece.setVisible(setting['Visibility'])
+                    piece.setPosition(setting['Position'])
+                    piece.setMove(0)
+
+    main()
+
+
+# Set game piece size and give piece all available pieces
+def drawPieces(src: pygame.Surface, size: list, castle: bool, kingPiece):
+    for piece in all_pieces:
+        piece.loadPieces(all_pieces)
+        piece.setSize(size)
+        if (castle):
+            kingX, kingY = kingPiece.getPosition()
+            if (piece.getName() == "Rook" and piece.getColor() == kingPiece.getColor()):
+                if (piece.getPosition() == (kingX + 1, kingY)):
+                    piece.setPosition((kingX - 1, kingY))
+                elif (piece.getPosition() == (kingX - 1, kingY)):
+                    piece.setPosition((kingX + 1, kingY))
+
+        piece.drawPiece(src, piece.getPosition())
+
+
+# Draw the game board
+def drawBoard(src: pygame.Surface, size: list, moves: list = None):
     color_pic = 0
-    for row in range(8):
-        for column in range(8):
+    width = size[0] / 8
+    height = size[1] / 8
+
+    for y in range(8):
+        for x in range(8):
+            color = None
+            if color_pic > 1:
+                color_pic = 0
             if color_pic == 0:
                 color = white
-            if color_pic == 1:
+            elif color_pic == 1:
                 color = black
-            # print(row, column, color)
-            pygame.draw.rect(src,
-                             color,
-                             [width * column,
-                              height * row,
-                              width,
-                              height])
-
+            pygame.draw.rect(src, color, [width * x, height * y, width, height])
             color_pic = 0 if color_pic == 1 else 1
 
+            if (moves is not None and (x, y) in moves):
+                s = pygame.Surface((width, height))
+                s.set_alpha(100)
+                s.fill(green)
+                src.blit(s, (width * x, height * y))
         color_pic += 1
 
 
-class Sprite(pygame.sprite.Sprite):
-    def __init__(self, image, pos, width, height):
-        super().__init__()
+# Get all the moves each piece is able to make
+def getPieceMoves(turn: int, mouse_pos: tuple, checkedKing=None, possibleMoves: dict = None):
+    returnedPiece = None
+    moves = []
 
-        self.rect = pygame.Rect(pos[0], pos[1], width, height)
-        self.image = pygame.image.load('1x/' + image)
-        self.image = pygame.transform.scale(self.image, (width, height))
-
-
-def mouseDown(mouseLoc):
-    selected_piece = None
-    friends = []
-    enemies = []
-
-    white_locations = [[], []]
-    for piece in white_pieces:
-        white_locations[0].append(piece.position)
-        white_locations[1].append(piece)
-
-    black_locations = [[], []]
-    for piece in black_pieces:
-        black_locations[0].append(piece.position)
-        black_locations[1].append(piece)
-    # print('white: ', white_locations, 'black: ', black_locations)
-
-    for i in range(len(white_locations[0])):
-        if mouseLoc == white_locations[0][i]:
-            selected_piece = white_locations[1][i]
-            enemies = black_pieces
-            friends = white_pieces
-    for i in range(len(black_locations[0])):
-        if mouseLoc == black_locations[0][i]:
-            selected_piece = black_locations[1][i]
-            enemies = white_pieces
-            friends = black_pieces
-
-    if (selected_piece is not None) and (selected_piece.visible):
-        moves = selected_piece.getMoves(friends, enemies)
-        return moves, selected_piece
+    if (turn % 2 == 0):
+        teamsPieces = black_pieces
     else:
-        return None, None
+        teamsPieces = white_pieces
+
+    if (checkedKing is None):
+        for piece in teamsPieces:
+            if ((piece.getPosition() == mouse_pos) and (piece.getVisible())):
+                returnedPiece = piece
+                moves = piece.getMoves()
+    elif (checkedKing is not None):
+        for piece in teamsPieces:
+            if ((piece.getPosition() == mouse_pos) and (piece.getVisible())):
+                for pieceKey, possMoves in possibleMoves.items():
+                    testToKey = piece.getID()
+                    if (testToKey == pieceKey):
+                        for pieceMoves in piece.getMoves():
+                            if pieceMoves in possMoves:
+                                piece = piece
+                                moves.append(pieceMoves)
+
+    return returnedPiece, moves
 
 
-def redraw(src, moves):
-    drawBoard(src)
-    drawPieces(src, white_pieces)
-    drawPieces(src, black_pieces)
+# Function for moving game pieces
+def movePiece(piece, moves: list, mouse_pos: tuple):
+    output = False
+    castle = False
+    returnedPiece = None
 
-    if (moves is None) or (len(moves) > 2):
-        return None
+    if (mouse_pos in moves):
+        piece.setPosition(mouse_pos)
+        if (piece.getName() == "King"):
+            if (mouse_pos[0] == 1 or mouse_pos[0] == 6):
+                castle = True
+                returnedPiece = piece
+        output = True
 
-    for i in range(len(moves[0])):
-        pygame.draw.rect(src,
-                         green,
-                         [width * moves[0][i][0],
-                          height * moves[0][i][1],
-                          width,
-                          height])
-
-    for i in range(len(moves[1])):
-        pygame.draw.rect(src,
-                         green,
-                         [width * moves[1][i][0],
-                          height * moves[1][i][1],
-                          width,
-                          height])
+    return output, castle, returnedPiece
 
 
-def loop(src):
+def checkCapture(movedPiece):
+    pieceCaptured = False
+
+    for piece in all_pieces:
+        if ((piece.getPosition() == movedPiece.getPosition()) and (piece.getColor() != movedPiece.getColor())):
+            piece.setVisible(False)
+            pieceCaptured = True
+        elif (movedPiece.getName() == "Pawn"):
+            pawnX, pawnY = movedPiece.getPosition()
+            if (piece.getName() == "Pawn" and piece.getColor() != movedPiece.getColor() and piece.moves == 1):
+                if ((piece.getPosition() == (pawnX, pawnY - 1) and piece.getColor() == "white") or (
+                        piece.getPosition() == (pawnX, pawnY + 1) and piece.getColor() == "black")):
+                    piece.setVisible(False)
+                    pieceCaptured = True
+
+    return pieceCaptured
+
+
+# Check other pieces for move when checked
+def checkOtherMoves(king):
+    possibleMoves = {}
+
+    for friendPiece in all_pieces:
+        if (friendPiece.getColor() == king.getColor()):
+            movesPerPiece = []
+            moves = friendPiece.getMoves()
+            for move in moves:
+                originalPos = friendPiece.getPosition()
+                friendPiece.setPosition(move)
+                allEnemyMoves = []
+                for enemyPieces in all_pieces:
+                    if ((enemyPieces.getColor() != king.getColor()) and (
+                            friendPiece.getPosition() != enemyPieces.getPosition())):
+                        enemyMoves = enemyPieces.getMoves()
+                        for enemyMove in enemyMoves:
+                            allEnemyMoves.append(enemyMove)
+                if (king.getPosition() not in allEnemyMoves):
+                    movesPerPiece.append(move)
+                friendPiece.setPosition(originalPos)
+
+            key = friendPiece.getID()
+            possibleMoves.update({key: movesPerPiece})
+
+    return possibleMoves
+
+
+# Check if king in check
+def KingChecked(movedPiece):
+    checked = False
+    checkedKing = None
+    mated = False
+    possibleMoves = None
+
+    for piece in all_pieces:
+        if (piece.getColor() != movedPiece.getColor()):
+            if (piece.getPosition() in movedPiece.getMoves()):
+                if (piece.getName() == "King"):
+                    checked = True
+                    checkedKing = piece
+    if (checked):
+        mated, possibleMoves = KingMated(checkedKing)
+
+    return checkedKing, mated, possibleMoves
+
+
+# Check if mate
+def KingMated(king):
+    mated = False
+
+    possibleMoves = checkOtherMoves(king)
+    totalVal = []
+    for val in possibleMoves.values():
+        totalVal += val
+
+    if (totalVal == []):
+        mated = True
+
+    return mated, possibleMoves
+
+
+# Single function for drawing board and pieces on screen
+def draw(src: pygame.Surface, size: list, castle: bool = None, kingPiece=None, moves: list = None):
+    drawBoard(src, size, moves)
+    drawPieces(src, size, castle, kingPiece)
+
+
+def gameEnd(src: pygame.Surface):
+    width, height = src.get_size()
+
+    surface = pygame.Surface((width, height))
+    surface.fill((150, 0, 0))
+    retryButton = pygame.draw.rect(surface, black, [width / 2.6, height / 2, width / 4, height / 6], border_radius=3)
+
+    gameOverText = pygame.font.SysFont('impact', int(40 * height / 550)).render("Game Over!", True, black)
+    gameOverRect = gameOverText.get_rect(center=(width / 2, height / 3))
+    retryText = pygame.font.SysFont('impact', int(25 * height / 550)).render("Retry?", True, white)
+    retryRect = retryText.get_rect(center=retryButton.center)
+
+    surface.blit(retryText, retryRect)
+    surface.blit(gameOverText, gameOverRect)
+    src.blit(surface, (0, 0))
+
+    return retryButton
+
+
+# Main loop for pygame events
+def loop(src: pygame.Surface):
     done = False
+    piece = None
     moves = None
-    while not done:
+    ended = False
+    checkedKing = None
+    possibleMoves = None
+    turn = 1
+    doDraw = True
+    castle = False
+    movedPiece = None
+    retryButton = None
+
+    while (not done):
         for event in pygame.event.get():
+            vidInfo = pygame.display.Info()
+            size = [(vidInfo.current_w), (vidInfo.current_h)]
+            board_size = [(2 * size[0]) / 3, size[1]]
+            width = board_size[0] / 8
+            height = board_size[1] / 8
+
             if event.type == pygame.QUIT:
                 done = True
 
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                pos = pygame.mouse.get_pos()
-                col = round(pos[0] // width)
-                row = round(pos[1] // height)
-                mouseLoc = [col, row]
-                if moves is None:
-                    # print('moves is none')
-                    moves, selectedPiece = mouseDown(mouseLoc)
-                elif (mouseLoc in moves[0]) or (mouseLoc in moves[1]):
-                    # print('mouseLoc is in moves')
-                    selectedPiece.setPosition(mouseLoc)
-                    selectedPiece.draw(src, selectedPiece.position)
+            if event.type == pygame.VIDEORESIZE:
+                size = list(event.size)
+                board_size = [(2 * size[0]) / 3, size[1]]
+                if (doDraw):
+                    draw(src, board_size, moves)
+                else:
+                    gameEnd(src)
+
+            if event.type == pygame.MOUSEBUTTONUP:
+                moved = False
+                mouse_pos = pygame.mouse.get_pos()
+                mouse_pos = (floor(mouse_pos[0] / width), floor(mouse_pos[1] / height))
+
+                if (ended):
+                    mouseX, mouseY = pygame.mouse.get_pos()
+                    topLeft = retryButton.topleft
+                    topRight = retryButton.topright[0]
+                    bottomLeft = retryButton.bottomleft[1]
+
+                    if (topLeft[0] < mouseX < topRight and topLeft[1] < mouseY < bottomLeft):
+                        onReset()
+
+                if ((piece is not None) and (mouse_pos not in piece.getMoves())):
                     moves = None
-                elif (moves is not None) and (mouseLoc not in moves):
-                    # print('moves not none mouse location not in moves')
-                    if (selectedPiece is not None) and (mouseLoc == selectedPiece.position):
-                        moves, selectedPiece = None, None
-                    else:
-                        moves, selectedPiece = mouseDown(mouseLoc)
-
-                if selectedPiece is not None:
-                    if selectedPiece.color == 'black':
-                        for piece in white_pieces:
-                            if selectedPiece.position == piece.position:
-                                piece.setVisible(False)
-                    else:
-                        for piece in black_pieces:
-                            if selectedPiece.position == piece.position:
-                                piece.setVisible(False)
-
-                print(moves)
-                redraw(src, moves)
-
-        pygame.display.flip()
-
-
-def testLoop(src):
-    done = False
-    while not done:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                done = True
+                    piece = None
+                else:
+                    if ((piece is None)):
+                        piece, moves = getPieceMoves(turn, mouse_pos, checkedKing, possibleMoves)
+                    if (piece is not None):
+                        moved, castle, movedPiece = movePiece(piece, moves, mouse_pos)
+                    if (moved):
+                        checkCapture(piece)
+                        checkedKing, mated, possibleMoves = KingChecked(piece)
+                        if (mated):
+                            print("Ended")
+                            retryButton = gameEnd(src)
+                            ended = True
+                            doDraw = False
+                            break
+                        moves = None
+                        piece = None
+                        turn += 1
+                if (doDraw):
+                    draw(src, board_size, castle, movedPiece, moves)
 
         pygame.display.flip()
 
 
+# main function setting defaults
 def main():
+
     pygame.init()
-    src = pygame.display.set_mode(window_size)
-    pygame.display.set_caption('Chess')
+
+    src = pygame.display.set_mode(screen_size, pygame.RESIZABLE)
+    pygame.display.set_caption(config['app']['title'])
+
     clock = pygame.time.Clock()
     clock.tick(50)
-    drawBoard(src)
-    drawPieces(src, white_pieces)
-    drawPieces(src, black_pieces)
-    # print('white corner rook moves: ', white_pieces[0].getMoves(white_pieces, black_pieces))
-    # print('white middle rook moves: ', white_pieces[1].getMoves(white_pieces, black_pieces))
-    # print('black corner rook moves: ', black_pieces[0].getMoves(black_pieces, white_pieces))
-    # print('black middle rook moves: ', black_pieces[1].getMoves(black_pieces, white_pieces))
-    # print('white bishop moves: ', white_pieces[3].getMoves(white_pieces, black_pieces))
-    # print('white bishop moves: ', black_pieces[3].getMoves(black_pieces, white_pieces))
+
+    draw(src, [(2 * screen_size[0]) / 3, screen_size[1]])
+    print("Running...\n")
     loop(src)
+
     pygame.quit()
 
 
-if __name__ == '__main__':
+# Start game
+if __name__ == "__main__":
     main()

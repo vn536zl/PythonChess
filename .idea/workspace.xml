@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="0d1ad7de-a7c5-4d2e-b233-0827eb071f17" name="Changes" comment="merge main clean up" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="NamedScopeManager">
+    <scope name="UsedFiles" pattern="file:app_constanst.py||file:main.py||file:requirements.txt||file:pieces/Bishop.py||file:pieces/GamePiece.py||file:pieces/King.py||file:pieces/Knight.py||file:pieces/Pawn.py||file:pieces/Queen.py||file:pieces/Rook.py" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
+  <component name="ProjectId" id="2GH0uLVUfL2VIvj8hEXKIg0QL2N" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "ToolWindowChanges.ShowToolbar": "false",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/JISAAPP/PycharmProjects/PythonChess",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "run.code.analysis.last.selected.profile": "aDefault",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\JISAAPP\PycharmProjects\PythonChess" />
+      <recent name="C:\Users\JISAAPP\PycharmProjects\PythonChess\pieces" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="ChessRun" type="PythonConfigurationType" factoryName="Python">
+      <module name="PythonChess" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\JISAAPP\PycharmProjects\PythonChess\venv\Scripts\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0d1ad7de-a7c5-4d2e-b233-0827eb071f17" name="Changes" comment="" />
+      <created>1666030425494</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1666030425494</updated>
+      <workItem from="1666030429327" duration="9615000" />
+      <workItem from="1666787420926" duration="3598000" />
+      <workItem from="1666800303864" duration="8427000" />
+      <workItem from="1666975247035" duration="783000" />
+      <workItem from="1667243109429" duration="2784000" />
+      <workItem from="1667305024642" duration="12525000" />
+      <workItem from="1667324838337" duration="9511000" />
+      <workItem from="1667409376888" duration="6475000" />
+      <workItem from="1667484708188" duration="13369000" />
+      <workItem from="1667502759121" duration="316000" />
+    </task>
+    <task id="LOCAL-00001" summary="resizing the window">
+      <created>1666791736121</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1666791736121</updated>
+    </task>
+    <task id="LOCAL-00002" summary="resizeable window">
+      <created>1666802739441</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1666802739441</updated>
+    </task>
+    <task id="LOCAL-00003" summary="resizeable window">
+      <created>1667243258562</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1667243258562</updated>
+    </task>
+    <task id="LOCAL-00004" summary="extrenal config yaml">
+      <created>1667310294633</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1667310294633</updated>
+    </task>
+    <task id="LOCAL-00005" summary="external .py file for config">
+      <created>1667323151125</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1667323151125</updated>
+    </task>
+    <task id="LOCAL-00006" summary="King mate">
+      <created>1667330961716</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1667330961716</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Turn based movement,&#10;All Pawns added">
+      <created>1667332225013</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1667332225013</updated>
+    </task>
+    <task id="LOCAL-00008" summary="adding game over screen">
+      <created>1667336849934</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1667336849934</updated>
+    </task>
+    <task id="LOCAL-00009" summary="king castling moves">
+      <created>1667488839611</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1667488839611</updated>
+    </task>
+    <task id="LOCAL-00010" summary="working on en passent / added name to pieces">
+      <created>1667489452467</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1667489452467</updated>
+    </task>
+    <task id="LOCAL-00011" summary="En Passant completed/ get methods for game pieces">
+      <created>1667495765730</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1667495765730</updated>
+    </task>
+    <task id="LOCAL-00012" summary="added reset method">
+      <created>1667501298342</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1667501298342</updated>
+    </task>
+    <task id="LOCAL-00013" summary="merge main">
+      <created>1667502932480</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1667502932480</updated>
+    </task>
+    <task id="LOCAL-00014" summary="merge main clean up">
+      <created>1667503070476</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1667503070476</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/ChessV2" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="resizing the window" />
+    <MESSAGE value="resizeable window" />
+    <MESSAGE value="extrenal config yaml" />
+    <MESSAGE value="external .py file for config" />
+    <MESSAGE value="King mate" />
+    <MESSAGE value="Turn based movement,&#10;All Pawns added" />
+    <MESSAGE value="adding game over screen" />
+    <MESSAGE value="king castling moves" />
+    <MESSAGE value="working on en passent / added name to pieces" />
+    <MESSAGE value="En Passant completed/ get methods for game pieces" />
+    <MESSAGE value="added reset method" />
+    <MESSAGE value="merge main" />
+    <MESSAGE value="merge main clean up" />
+    <option name="LAST_COMMIT_MESSAGE" value="merge main clean up" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/pieces/King.py</url>
+          <line>58</line>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/pieces/King.py</url>
+          <line>59</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+      </breakpoints>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="PythonConfigurationType">
+        <watch expression="piece.position" />
+      </configuration>
+      <inline-watch fileUrl="file://$PROJECT_DIR$/pieces/King.py" line="57">
+        <watch expression="piece" language="Python" />
+      </inline-watch>
+      <inline-watch fileUrl="file://$PROJECT_DIR$/pieces/King.py" line="57">
+        <watch expression="piece.getPosition()" language="Python" />
+      </inline-watch>
+      <inline-watch fileUrl="file://$PROJECT_DIR$/pieces/King.py" line="58">
+        <watch expression="((piece.position in moveList) and (piece.color == self.color))" language="Python" />
+      </inline-watch>
+    </watches-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/PythonChess$ChessRun.coverage" NAME="ChessRun Coverage Results" MODIFIED="1667501266906" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+  </component>
+</project>
